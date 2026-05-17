@@ -80,7 +80,7 @@ python data/generate_dataset.py
 
 ---
 
-## ▶️ Run Options
+### 3. ▶️ Run Options
 
 ### Option A: Run ML Pipeline
 ```bash
@@ -101,7 +101,7 @@ Open: http://localhost:8000/docs
 
 ---
 
-## 🌐 Demo (No Setup)
+### 4. 🌐 Demo (No Setup)
 
 Open in browser:
 ```
