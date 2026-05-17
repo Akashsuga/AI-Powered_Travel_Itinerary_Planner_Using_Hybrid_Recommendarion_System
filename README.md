@@ -51,11 +51,13 @@ The system is designed to handle both **existing users** and **cold-start users*
 ```
 travel_rec_system/
 ├── API/              # FastAPI backend
-├── Data Source/      # dataset (synthetic)
+├── Data Source/     # dataset (synthetic)
+├── graphs/          # evaluation plots
 ├── Screenshots/     # screenshots of UI
-├── graphs/           # evaluation plots
 ├── src/             # ML pipeline
 ├── requirements.txt
+├── TRS- PPT.pdf     # project Powerpoint Presentation
+├── project report.pdf
 └── demo.html
 ```
 
@@ -102,12 +104,6 @@ The project includes visual analysis of:
 
 (Refer to `/graphs` folder)
 
----
-
-## 📄 Documentation
-
-- Project Report: `docs/project-report.pdf`  
-- Presentation: `docs/presentation.pdf`  
 
 ---
 
@@ -128,4 +124,4 @@ The project includes visual analysis of:
 
 ## 👨‍💻 Author
 
-Akash S
+Akash M
