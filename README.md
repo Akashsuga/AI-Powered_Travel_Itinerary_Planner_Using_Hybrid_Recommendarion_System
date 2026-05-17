@@ -151,6 +151,13 @@ The project includes visual analysis of:
 
 ---
 
+
+
 ## 👨‍💻 Author
 
-Akash M
+**AKASH M**  
+Data Science Student – Tamil Nadu  
+- [GitHub](https://github.com/Akashsuga) |
+- [LinkedIn]https://www.linkedin.com/in/akash-m-0b09602ba
+
+---
