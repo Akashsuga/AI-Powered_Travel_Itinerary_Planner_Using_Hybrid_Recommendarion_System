@@ -52,8 +52,9 @@ The system is designed to handle both **existing users** and **cold-start users*
 travel_rec_system/
 ├── API/              # FastAPI backend
 ├── Data Source/      # dataset (synthetic)
-├── src/             # ML pipeline
+├── Screenshots/     # screenshots of UI
 ├── graphs/           # evaluation plots
+├── src/             # ML pipeline
 ├── requirements.txt
 └── demo.html
 ```
