@@ -65,19 +65,39 @@ travel_rec_system/
 
 ## ⚙️ How to Run
 
+## Running the Project
+
 ### 1. Install dependencies
+
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2. Start API server
+### 2. Generate datasets
+
+```bash
+python data/generate_dataset.py
+```
+
+### 3. Run the recommender pipeline
+
+```bash
+python src/recommender.py
+```
+
+### 4. Generate analysis graphs
+
+```bash
+python graphs/generate_graphs.py
+```
+
+### 5. Start the API server
+
 ```bash
 uvicorn api.main:app --reload
 ```
 
-### 3. Open API docs
-http://localhost:8000/docs
-
+Open `http://localhost:8000/docs` for the API docs.
 ---
 
 ## 📊 Example Output
