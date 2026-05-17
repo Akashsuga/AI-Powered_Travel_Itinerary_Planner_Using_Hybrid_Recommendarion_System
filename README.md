@@ -65,39 +65,48 @@ travel_rec_system/
 
 ## ⚙️ How to Run
 
-## Running the Project
 
-### 1. Install dependencies
+## ⚙️ Quick Start
 
+### 1. Install Dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2. Generate datasets
-
+### 2. Generate Dataset
 ```bash
 python data/generate_dataset.py
 ```
 
-### 3. Run the recommender pipeline
+---
 
+## ▶️ Run Options
+
+### Option A: Run ML Pipeline
 ```bash
 python src/recommender.py
 ```
+- Demo recommendations  
+- Evaluation metrics (Precision, Recall, NDCG, RMSE)
 
-### 4. Generate analysis graphs
+---
 
-```bash
-python graphs/generate_graphs.py
-```
-
-### 5. Start the API server
-
+### Option B: Start API Server
 ```bash
 uvicorn api.main:app --reload
 ```
+Open: http://localhost:8000/docs
 
-Open `http://localhost:8000/docs` for the API docs.
+
+
+---
+
+## 🌐 Demo (No Setup)
+
+Open in browser:
+```
+intelligent_travel_recommendation_system_canada.html
+```
 ---
 
 ## 📊 Example Output
