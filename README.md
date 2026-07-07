@@ -1,4 +1,4 @@
-# Travel-Recommendation-System
+# AI-Powered Travel Itinerary Planner Using Hybrid Recommendation System
 
 ## 🚀 Overview
 A hybrid machine learning system that generates personalized travel recommendations across Canada using:
