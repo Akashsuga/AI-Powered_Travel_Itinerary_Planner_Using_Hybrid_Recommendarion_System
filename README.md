@@ -120,6 +120,7 @@ intelligent_travel_recommendation_system_canada.html
 1. Jasper Dark Sky Preserve
 2. Banff National Park 
 3. Lake Louise
+   
    <img width="1477" height="926" alt="Screenshot_7-7-2026_1275_" src="https://github.com/user-attachments/assets/cb7e7b64-8e32-49a7-806c-d092d4785f64" />
 
 
