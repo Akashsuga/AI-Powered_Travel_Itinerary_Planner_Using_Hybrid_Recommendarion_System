@@ -1,0 +1,962 @@
+﻿<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap');
+
+  :root {
+    --navy: #1E3A5F;
+    --teal: #2563EB;
+    --gold: #64748B;
+    --cream: #F8FAFC;
+    --sand: #F1F5F9;
+    --mist: #E2E8F0;
+    --text: #1E293B;
+    --text2: #475569;
+    --text3: #64748B;
+    --border: rgba(30,41,59,0.12);
+    --card-bg: #FFFFFF;
+    --bg: #F8FAFC;
+    --success: #15803D;
+    --danger: #B91C1C;
+    --radius: 14px;
+    --radius-sm: 8px;
+    --shadow: 0 2px 16px rgba(30,41,59,0.08);
+    --shadow-lg: 0 8px 40px rgba(30,41,59,0.14);
+    --font-display: 'DM Serif Display', Georgia, serif;
+    --font-body: 'DM Sans', system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--color-background-primary, var(--bg));
+    color: var(--color-text-primary, var(--text));
+  }
+
+  .app { max-width: 1180px; margin: 0 auto; padding: 1.25rem 1.5rem 2rem; }
+
+  /* â”€â”€ Header â”€â”€ */
+  .header {
+    margin: 0 0 1.5rem;
+    padding: 2.5rem 2rem;
+    background: linear-gradient(135deg, var(--navy), #16233D);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    text-align: center;
+  }
+  .header-eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #8FB4E8;
+    margin-bottom: 6px;
+  }
+  .header h1 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    color: #FFFFFF;
+    line-height: 1.35;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+  .header h1 .title-main { font-size: 44px; }
+  .header h1 .title-sub { font-size: 24px; color: rgba(255,255,255,0.85); }
+  .header-sub {
+    font-size: 12px;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 10px;
+    line-height: 1.5;
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .badge-row { display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; }
+  .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.1);
+    color: #DCE8FB;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    padding: 3px 9px;
+    border-radius: 99px;
+    border: 1px solid rgba(255,255,255,0.22);
+  }
+
+  /* â”€â”€ Stats bar â”€â”€ */
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 1.5rem;
+  }
+  .stat-box {
+    background: var(--color-background-secondary, var(--sand));
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .stat-box .s-val {
+    font-family: var(--font-display);
+    font-size: 20px;
+    color: var(--color-text-primary, var(--navy));
+    line-height: 1;
+    margin-bottom: 2px;
+  }
+  .stat-box .s-lbl { font-size: 10px; color: var(--color-text-secondary, var(--text3)); letter-spacing: 0.05em; text-transform: uppercase; }
+
+  /* â”€â”€ Tabs â”€â”€ */
+  .tab-row {
+    display: flex;
+    gap: 2px;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tab-row::-webkit-scrollbar { display: none; }
+  .tab {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 8px 14px;
+    cursor: pointer;
+    border: none;
+    background: none;
+    color: var(--color-text-secondary, var(--text2));
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    white-space: nowrap;
+    transition: color 0.15s, border-color 0.15s;
+    letter-spacing: 0.02em;
+  }
+  .tab.active { color: var(--teal); border-bottom-color: var(--teal); }
+  .tab:hover:not(.active) { color: var(--color-text-primary, var(--navy)); }
+
+  /* â”€â”€ Filters â”€â”€ */
+  .section-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-secondary, var(--text3));
+    margin-bottom: 8px;
+  }
+  .filter-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1.25rem; }
+  .filter-group {
+    background: var(--color-background-secondary, var(--sand));
+    border-radius: var(--radius-sm);
+    padding: 11px 12px;
+    border: 1px solid var(--border);
+  }
+  .filter-group label { font-size: 11px; color: var(--color-text-secondary, var(--text3)); display: block; margin-bottom: 7px; font-weight: 500; letter-spacing: 0.02em; }
+  select {
+    width: 100%;
+    font-size: 12px;
+    padding: 5px 8px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--color-background-primary, var(--card-bg));
+    color: var(--color-text-primary, var(--text));
+    font-family: var(--font-body);
+    appearance: auto;
+  }
+  .slider-row { display: flex; align-items: center; gap: 6px; }
+  .slider-end { font-size: 10px; color: var(--color-text-secondary, var(--text3)); }
+  input[type=range] { width: 100%; accent-color: var(--teal); }
+  .slider-val { font-size: 12px; font-weight: 600; color: var(--teal); min-width: 38px; }
+
+  /* â”€â”€ Interest tags â”€â”€ */
+  .tag-row { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 1.25rem; }
+  .tag {
+    font-size: 11px;
+    padding: 4px 11px;
+    border-radius: 99px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    background: var(--color-background-secondary, var(--cream));
+    color: var(--color-text-secondary, var(--text2));
+    transition: all 0.15s;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+  }
+  .tag.active { background: var(--teal); color: #fff; border-color: var(--teal); font-weight: 500; }
+  .tag:hover:not(.active) { border-color: var(--teal); color: var(--teal); }
+
+  /* â”€â”€ Buttons â”€â”€ */
+  .btn-row { display: flex; gap: 8px; margin-bottom: 1.25rem; }
+  .btn {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: var(--color-background-secondary, var(--sand));
+    color: var(--color-text-primary, var(--text));
+    cursor: pointer;
+    font-family: var(--font-body);
+    letter-spacing: 0.02em;
+    transition: all 0.15s;
+  }
+  .btn.primary { background: var(--teal); color: #fff; border-color: var(--teal); }
+  .btn:hover { opacity: 0.85; }
+  .btn-icon { margin-left: 4px; }
+
+  /* â”€â”€ Results bar â”€â”€ */
+  .results-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .results-header span { font-size: 12px; color: var(--color-text-secondary, var(--text2)); }
+  .sort-select {
+    font-size: 11px; padding: 4px 8px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--color-background-primary, var(--card-bg));
+    color: var(--color-text-primary, var(--text));
+    font-family: var(--font-body);
+  }
+
+  /* â”€â”€ Cards â”€â”€ */
+  .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 10px; }
+  .card {
+    background: var(--color-background-primary, var(--card-bg));
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem;
+    position: relative;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
+  .card-eyebrow { font-size: 10px; color: var(--color-text-secondary, var(--text3)); margin-bottom: 3px; letter-spacing: 0.05em; text-transform: uppercase; }
+  .card-name { font-family: var(--font-display); font-size: 16px; font-weight: 400; color: var(--color-text-primary, var(--navy)); margin-bottom: 4px; line-height: 1.25; letter-spacing: -0.01em; }
+  .card-type { font-size: 10px; color: var(--teal); font-weight: 500; margin-bottom: 8px; background: var(--mist); display: inline-block; padding: 1px 7px; border-radius: 4px; }
+  .card-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 10px; }
+  .card-tag { font-size: 10px; padding: 2px 7px; border-radius: 99px; background: var(--color-background-secondary, var(--sand)); color: var(--color-text-secondary, var(--text2)); border: 1px solid var(--border); }
+  .card-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 10px; }
+  .stat { font-size: 10px; color: var(--color-text-secondary, var(--text2)); }
+  .stat strong { display: block; font-size: 13px; font-weight: 600; color: var(--color-text-primary, var(--navy)); margin-bottom: 1px; }
+  .score-bar-wrap { margin-bottom: 10px; }
+  .score-bar-label { display: flex; justify-content: space-between; font-size: 10px; color: var(--color-text-secondary, var(--text3)); margin-bottom: 4px; }
+  .score-bar-bg { height: 4px; background: var(--color-background-secondary, var(--sand)); border-radius: 99px; }
+  .score-bar-fill { height: 4px; border-radius: 99px; background: linear-gradient(90deg, var(--teal), var(--gold)); transition: width 0.5s ease; }
+  .card-btn {
+    width: 100%; font-size: 11px; padding: 7px;
+    border: 1px solid var(--border); border-radius: var(--radius-sm);
+    background: transparent; color: var(--color-text-primary, var(--navy));
+    cursor: pointer; font-family: var(--font-body); font-weight: 500;
+    transition: all 0.15s; letter-spacing: 0.02em;
+  }
+  .card-btn:hover { background: var(--teal); color: #fff; border-color: var(--teal); }
+  .match-badge {
+    position: absolute; top: 10px; right: 10px;
+    font-size: 10px; font-weight: 600;
+    background: #EAF5F0; color: var(--success);
+    padding: 2px 8px; border-radius: 99px;
+    border: 1px solid rgba(45,106,79,0.2);
+  }
+  .no-results { text-align: center; padding: 2.5rem; color: var(--color-text-secondary, var(--text3)); font-size: 13px; }
+  .no-results-icon { font-size: 32px; margin-bottom: 8px; }
+
+  /* â”€â”€ Pipeline & Info tabs â”€â”€ */
+  .pipeline { display: flex; flex-direction: column; gap: 8px; }
+  .pipe-step {
+    background: var(--color-background-secondary, var(--sand));
+    border-radius: var(--radius-sm); padding: 12px 14px;
+    display: flex; align-items: flex-start; gap: 12px;
+    border: 1px solid var(--border);
+  }
+  .pipe-num {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--teal); color: #fff;
+    font-size: 11px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    font-family: var(--font-display);
+  }
+  .pipe-text h3 { font-size: 13px; font-weight: 600; color: var(--color-text-primary, var(--navy)); margin-bottom: 3px; }
+  .pipe-text p { font-size: 11px; color: var(--color-text-secondary, var(--text2)); line-height: 1.55; }
+  .dataset-row {
+    background: var(--color-background-secondary, var(--sand));
+    border-radius: var(--radius-sm); padding: 11px 13px; margin-bottom: 8px;
+    border: 1px solid var(--border); border-left: 3px solid var(--teal);
+  }
+  .dataset-row h3 { font-size: 12px; font-weight: 600; color: var(--color-text-primary, var(--navy)); margin-bottom: 3px; }
+  .dataset-row p { font-size: 11px; color: var(--color-text-secondary, var(--text2)); line-height: 1.5; }
+  .metrics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 1.5rem; }
+  .metric-card {
+    background: var(--color-background-secondary, var(--sand));
+    border-radius: var(--radius-sm); padding: 12px 10px;
+    text-align: center; border: 1px solid var(--border);
+  }
+  .metric-card .val { font-family: var(--font-display); font-size: 22px; color: var(--teal); line-height: 1; margin-bottom: 3px; }
+  .metric-card .lbl { font-size: 10px; color: var(--color-text-secondary, var(--text3)); letter-spacing: 0.05em; text-transform: uppercase; }
+
+  /* â”€â”€ Weather chart â”€â”€ */
+  .weather-chart { margin-top: 6px; }
+  .weather-bar-row { display: flex; align-items: center; gap: 6px; margin-bottom: 3px; }
+  .weather-month { font-size: 9px; color: var(--text3); width: 22px; flex-shrink: 0; }
+  .weather-bar-bg { flex: 1; height: 8px; background: var(--sand); border-radius: 4px; position: relative; overflow: hidden; }
+  .weather-bar-fill { height: 100%; border-radius: 4px; transition: width 0.4s; }
+
+  /* â”€â”€ Modal â”€â”€ */
+  #destination-modal {
+    display: none; position: fixed; z-index: 1000;
+    left: 0; top: 0; width: 100vw; height: 100vh;
+    background: rgba(11,31,58,0.78); align-items: center;
+    justify-content: center; overflow-y: auto; padding: 20px 0;
+    backdrop-filter: blur(10px);
+  }
+  .modal-inner {
+    background: var(--color-background-primary, #fff);
+    max-width: 860px; width: 95vw; padding: 2rem 1.75rem 1.5rem;
+    border-radius: 18px; box-shadow: var(--shadow-lg);
+    position: relative; max-height: 90vh; overflow-y: auto;
+    animation: modalIn 0.22s cubic-bezier(.16,1,.3,1);
+  }
+  @keyframes modalIn { from { opacity:0; transform: translateY(30px) scale(0.97); } to { opacity:1; transform: none; } }
+  .modal-close {
+    position: absolute; top: 16px; right: 18px;
+    font-size: 20px; background: none; border: none;
+    cursor: pointer; color: var(--text3);
+    width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;
+    border-radius: 50%; transition: background 0.15s;
+  }
+  .modal-close:hover { background: var(--sand); }
+  .modal-title { font-family: var(--font-display); font-size: 20px; font-weight: 400; color: var(--navy); margin-bottom: 4px; letter-spacing: -0.01em; }
+  .modal-subtitle { font-size: 12px; color: var(--text3); margin-bottom: 12px; }
+  .modal-divider { height: 1px; background: var(--border); margin: 12px 0; }
+  .modal-section-label { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); margin-bottom: 8px; }
+  .modal-meta-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-bottom: 12px; }
+  .modal-meta { background: var(--sand); border-radius: 8px; padding: 8px 10px; text-align: center; }
+  .modal-meta .mv { font-size: 14px; font-weight: 600; color: var(--navy); }
+  .modal-meta .ml { font-size: 10px; color: var(--text3); margin-top: 2px; }
+  .modal-badge { display: inline-block; background: var(--mist); color: var(--teal); font-size: 10px; padding: 2px 8px; border-radius: 99px; margin: 2px; }
+  .itinerary-days-row { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 4px; }
+  .itinerary-day { background: var(--sand); border-left: 3px solid var(--teal); padding: 9px 11px; margin-bottom: 7px; border-radius: 0 8px 8px 0; flex: 0 0 240px; cursor: pointer; transition: box-shadow 0.15s, transform 0.15s; }
+  .itinerary-day:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+  .itinerary-day-header { font-weight: 600; color: var(--teal); font-size: 12px; margin-bottom: 6px; }
+  .itinerary-item { font-size: 11px; color: var(--text); padding: 2px 0; display: flex; justify-content: space-between; align-items: center; }
+  .itinerary-time { font-weight: 500; color: var(--navy); min-width: 72px; }
+  .itinerary-cost { color: var(--success); font-weight: 600; font-size: 10px; }
+  .itinerary-summary { background: var(--mist); padding: 9px 11px; border-radius: 8px; margin-bottom: 10px; font-size: 11px; }
+  .itinerary-summary div { margin-bottom: 2px; color: var(--text2); }
+  .itinerary-summary strong { color: var(--navy); }
+  .feasible-ok { color: var(--success); font-weight: 600; }
+  .feasible-warn { color: var(--danger); font-weight: 600; }
+
+  /* â”€â”€ Day detail popup â”€â”€ */
+  #day-modal {
+    display: none; position: fixed; z-index: 1100;
+    left: 0; top: 0; width: 100vw; height: 100vh;
+    background: rgba(6,15,28,0.9); align-items: center;
+    justify-content: center; overflow-y: auto; padding: 20px 0;
+  }
+  .day-modal-inner {
+    background: #FFFFFF;
+    max-width: 640px; width: 92vw; padding: 2.25rem 2rem 1.75rem;
+    border-radius: 20px; box-shadow: var(--shadow-lg);
+    position: relative; max-height: 88vh; overflow-y: auto;
+    animation: modalIn 0.22s cubic-bezier(.16,1,.3,1);
+  }
+  .day-modal-header { font-family: var(--font-display); font-size: 26px; font-weight: 400; color: var(--navy); margin-bottom: 16px; letter-spacing: -0.01em; }
+  .day-modal-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 4px; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--text); }
+  .day-modal-item:last-child { border-bottom: none; }
+  .day-modal-time { font-weight: 600; color: var(--teal); min-width: 130px; font-size: 14px; }
+  .day-modal-cost { color: var(--success); font-weight: 700; font-size: 15px; }
+
+  .data-overview { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 1.25rem; }
+  .data-card { background: var(--color-background-secondary, var(--sand)); border-radius: var(--radius-sm); padding: 12px; border: 1px solid var(--border); }
+  .data-card .dc-val { font-family: var(--font-display); font-size: 24px; color: var(--teal); }
+  .data-card .dc-lbl { font-size: 11px; color: var(--text2); margin-top: 2px; }
+  .data-card .dc-sub { font-size: 10px; color: var(--text3); margin-top: 3px; }
+</style>
+
+<div class="app">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-eyebrow">MSc Data Science &mdash; Canada Tourism AI</div>
+    <h1><span class="title-main">AI-Powered Travel Itinerary Planner</span><br><span class="title-sub">Using a Hybrid Recommendation System</span></h1>
+    <p class="header-sub">ML-powered destination matching across Canadian provinces and territories using a hybrid content-based and collaborative filtering model evaluated on a 5,462-rating synthetic dataset.</p>
+    <div class="badge-row">
+      <span class="badge">Content-Based Filtering</span>
+      <span class="badge">Collaborative Filtering</span>
+      <span class="badge">Hybrid Model (alpha=0.45, beta=0.35, gamma=0.20)</span>
+      <span class="badge">Scikit-learn</span>
+      <span class="badge">Synthetic Tourism Data</span>
+    </div>
+  </div>
+
+  <!-- Dataset stats bar -->
+  <div class="stats-bar">
+    <div class="stat-box"><div class="s-val">73</div><div class="s-lbl">Destinations</div></div>
+    <div class="stat-box"><div class="s-val">500</div><div class="s-lbl">Users</div></div>
+    <div class="stat-box"><div class="s-val">5,462</div><div class="s-lbl">Ratings</div></div>
+    <div class="stat-box"><div class="s-val">11</div><div class="s-lbl">Provinces</div></div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tab-row" id="tabs">
+    <button class="tab active" data-tab="recommender">Recommender</button>
+    <button class="tab" data-tab="pipeline">ML Pipeline</button>
+    <button class="tab" data-tab="datasets">Datasets</button>
+    <button class="tab" data-tab="metrics">Model Metrics</button>
+  </div>
+
+  <!-- Tab: Recommender -->
+  <div id="tab-recommender">
+    <div class="filter-grid">
+      <div class="filter-group">
+        <label>Province / Territory</label>
+        <select id="province">
+          <option value="">All Provinces</option>
+          <option>Alberta</option>
+          <option>British Columbia</option>
+          <option>Manitoba</option>
+          <option>New Brunswick</option>
+          <option>Newfoundland</option>
+          <option>Nova Scotia</option>
+          <option>Ontario</option>
+          <option>Prince Edward Island</option>
+          <option>Quebec</option>
+          <option>Saskatchewan</option>
+          <option>Yukon</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Season</label>
+        <select id="season">
+          <option value="">Any Season</option>
+          <option>Winter</option>
+          <option>Spring</option>
+          <option>Summer</option>
+          <option>Fall</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Budget (CAD/day): <span id="budget-out" style="color:var(--teal);font-weight:600;">$200</span></label>
+        <div class="slider-row">
+          <span class="slider-end">$50</span>
+          <input type="range" min="50" max="500" step="10" value="200" id="budget" />
+          <span class="slider-end">$500</span>
+        </div>
+      </div>
+      <div class="filter-group">
+        <label>Duration (days): <span id="duration-out" style="color:var(--teal);font-weight:600;">5</span></label>
+        <div class="slider-row">
+          <span class="slider-end">1</span>
+          <input type="range" min="1" max="30" step="1" value="5" id="duration" />
+          <span class="slider-end">30</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-label">Travel interests (select all that apply)</div>
+    <div class="tag-row" id="interests">
+      <span class="tag active" data-val="nature">Nature</span>
+      <span class="tag" data-val="skiing">Skiing</span>
+      <span class="tag" data-val="culture">Culture</span>
+      <span class="tag" data-val="food">Food &amp; Drink</span>
+      <span class="tag" data-val="wildlife">Wildlife</span>
+      <span class="tag" data-val="adventure">Adventure</span>
+      <span class="tag" data-val="history">History</span>
+      <span class="tag" data-val="beaches">Beaches</span>
+      <span class="tag active" data-val="hiking">Hiking</span>
+      <span class="tag" data-val="urban">Urban Explore</span>
+      <span class="tag" data-val="photography">Photography</span>
+      <span class="tag" data-val="family">Family-friendly</span>
+      <span class="tag" data-val="nightlife">Nightlife</span>
+      <span class="tag" data-val="astronomy">Astronomy</span>
+      <span class="tag" data-val="surfing">Surfing</span>
+      <span class="tag" data-val="camping">Camping</span>
+      <span class="tag" data-val="scenic">Scenic Drives</span>
+      <span class="tag" data-val="architecture">Architecture</span>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn primary" onclick="runRecommender()">Get Recommendations <span class="btn-icon">&#8599;</span></button>
+      <button class="btn" onclick="resetFilters()">Reset</button>
+    </div>
+
+    <div class="results-header">
+      <span id="result-count">Showing 0 destinations</span>
+      <select class="sort-select" id="sort-by" onchange="renderCards()">
+        <option value="score">Sort: Match Score</option>
+        <option value="cost">Sort: Cost (low&rarr;high)</option>
+        <option value="rating">Sort: Rating</option>
+        <option value="reviews">Sort: Most Visited</option>
+      </select>
+    </div>
+    <div class="cards-grid" id="cards"></div>
+  </div>
+
+  <!-- Tab: Pipeline -->
+  <div id="tab-pipeline" style="display:none">
+    <div class="section-label" style="margin-bottom:12px;">System architecture &amp; ML pipeline</div>
+    <div class="pipeline">
+      <div class="pipe-step"><div class="pipe-num">1</div><div class="pipe-text"><h3>Data Collection &amp; Ingestion</h3><p>73 Canadian destinations across 11 provinces and territories. 500 synthetic user profiles, 5,462 user-destination ratings, 12-month weather records, and supplementary hotel, attraction, and meal tables are loaded from local CSV files.</p></div></div>
+      <div class="pipe-step"><div class="pipe-num">2</div><div class="pipe-text"><h3>Preprocessing &amp; Feature Engineering</h3><p>Destination tags are vectorised with TF-IDF. Numeric features such as average daily cost, average rating, and weather-derived visitor index are min-max scaled before being combined into a destination feature matrix.</p></div></div>
+      <div class="pipe-step"><div class="pipe-num">3</div><div class="pipe-text"><h3>Content-Based Filtering (CBF)</h3><p>Cosine similarity is computed between a user preference vector built from selected interests and the destination feature matrix. This produces a ranked list of destinations based on profile similarity.</p></div></div>
+      <div class="pipe-step"><div class="pipe-num">4</div><div class="pipe-text"><h3>Collaborative Filtering (CF)</h3><p>The collaborative component factorises the user-destination ratings matrix using truncated SVD from SciPy. Existing users receive collaborative scores, while cold-start users fall back to a content-based and popularity-heavy blend.</p></div></div>
+      <div class="pipe-step"><div class="pipe-num">5</div><div class="pipe-text"><h3>Hybrid Ensemble Score</h3><p>Final score = 0.45 x CBF score + 0.35 x CF score + 0.20 x popularity score. The popularity term is derived from destination ratings and used as a lightweight prior inside the hybrid model.</p></div></div>
+      <div class="pipe-step"><div class="pipe-num">6</div><div class="pipe-text"><h3>Constraint Filtering</h3><p>Recommendations are filtered by optional province, season suitability, and budget tolerance. This keeps the final shortlist aligned with the traveler's declared constraints.</p></div></div>
+      <div class="pipe-step"><div class="pipe-num">7</div><div class="pipe-text"><h3>Offline Evaluation</h3><p>The prototype includes offline Precision@K, Recall@K, NDCG@K, and RMSE evaluation on the synthetic interaction dataset. These results should be interpreted as prototype-level offline metrics rather than production benchmarks.</p></div></div>
+    </div>
+  </div>
+
+  <!-- Tab: Datasets -->
+  <div id="tab-datasets" style="display:none">
+    <div class="section-label" style="margin-bottom:12px;">Dataset inventory &amp; sources</div>
+    <div class="data-overview">
+      <div class="data-card"><div class="dc-val">73</div><div class="dc-lbl">Destination records</div><div class="dc-sub">destinations.csv - 11 provinces, 10 destination types, 18 interest tags</div></div>
+      <div class="data-card"><div class="dc-val">500</div><div class="dc-lbl">User profiles</div><div class="dc-sub">users.csv - age, budget/day, duration, home province, interests, preferred season</div></div>
+      <div class="data-card"><div class="dc-val">5,462</div><div class="dc-lbl">Rating events</div><div class="dc-sub">ratings.csv - user_id x dest_id x rating (1-5) x visit_date</div></div>
+      <div class="data-card"><div class="dc-val">876</div><div class="dc-lbl">Weather records</div><div class="dc-sub">weather.csv - 73 destinations x 12 months: temp, precipitation, visitor_index</div></div>
+    </div>
+    <div class="dataset-row"><h3>destinations.csv - Core Destination Registry</h3><p>73 Canadian destinations with id, name, province, coordinates, tags, average daily cost, average rating, seasons, and destination type. This is the main catalogue used by both the content-based and hybrid components.</p></div>
+    <div class="dataset-row"><h3>users.csv - Traveller Profiles (500 users)</h3><p>Synthetic user profiles capturing age, daily budget, trip duration, home province, interest tags, preferred season, and group composition. These records support the collaborative filtering setup and API demos.</p></div>
+    <div class="dataset-row"><h3>ratings.csv - Interaction Matrix (5,462 events)</h3><p>Synthetic user-destination rating events with user_id, dest_id, rating, and visit_date. The 500 x 73 interaction matrix is sparse and is factorised by the collaborative filtering model.</p></div>
+    <div class="dataset-row"><h3>weather.csv - Seasonal Climate Profiles</h3><p>Monthly weather records per destination with average temperature, precipitation, and visitor index. The visitor index is used as a weather-derived numeric feature during recommendation.</p></div>
+    <div class="dataset-row"><h3>hotels.csv and meals.csv - Accommodation &amp; Dining</h3><p>Hotel and restaurant records linked by destination_id. These tables currently support dataset completeness and future itinerary extensions, but they are not yet part of the live scoring pipeline.</p></div>
+    <div class="dataset-row"><h3>attractions.csv - Points of Interest</h3><p>Attraction records per destination including name, cost, type, and coordinates. Like the hotel and meal tables, this dataset is available for analysis and possible future itinerary planning work.</p></div>
+    <div class="dataset-row"><h3>Synthetic Data Design Note</h3><p>The main recommendation datasets in this repository are synthetically generated for academic prototyping. They are inspired by public tourism data structures, but they are not direct copies of external microdata sources.</p></div>
+  </div>
+
+  <!-- Tab: Metrics -->
+  <div id="tab-metrics" style="display:none">
+    <div class="section-label" style="margin-bottom:12px;">Model evaluation summary</div>
+    <div class="metrics-grid">
+      <div class="metric-card"><div class="val">Offline</div><div class="lbl">Evaluation Mode</div></div>
+      <div class="metric-card"><div class="val">Synthetic</div><div class="lbl">Data Basis</div></div>
+      <div class="metric-card"><div class="val">K=10</div><div class="lbl">Ranking Cutoff</div></div>
+      <div class="metric-card"><div class="val">P@K</div><div class="lbl">Tracked Metric</div></div>
+      <div class="metric-card"><div class="val">NDCG</div><div class="lbl">Tracked Metric</div></div>
+      <div class="metric-card"><div class="val">RMSE</div><div class="lbl">Tracked Metric</div></div>
+    </div>
+    <div class="pipeline">
+      <div class="pipe-step"><div class="pipe-num" style="background:var(--success)">&#10003;</div><div class="pipe-text"><h3>Hybrid scoring is implemented end-to-end</h3><p>The codebase combines content-based, collaborative, and popularity signals into a single recommendation score that can be queried through the API and demonstrated in a project presentation.</p></div></div>
+      <div class="pipe-step"><div class="pipe-num" style="background:var(--success)">&#10003;</div><div class="pipe-text"><h3>Cold-start users are handled gracefully</h3><p>When no collaborative history exists for a user, the recommender falls back to a content-based and popularity-weighted strategy instead of failing to return results.</p></div></div>
+      <div class="pipe-step"><div class="pipe-num" style="background:var(--success)">&#10003;</div><div class="pipe-text"><h3>Evaluation is available inside the prototype</h3><p>The repository exposes offline Precision@K, Recall@K, NDCG@K, and RMSE calculations for the synthetic interaction dataset, which is suitable for prototype-level reporting.</p></div></div>
+      <div class="pipe-step"><div class="pipe-num" style="background:var(--teal)">i</div><div class="pipe-text"><h3>Ratings matrix sparsity remains realistic</h3><p>500 users x 73 destinations = 36,500 possible interactions. With 5,462 observed ratings, the matrix remains sparse enough to motivate matrix factorisation while still being easy to demonstrate in an academic prototype.</p></div></div>
+    </div>
+  </div>
+
+  <div id="destination-modal">
+    <div class="modal-inner">
+      <button class="modal-close" onclick="closeModal()" aria-label="Close destination details">&times;</button>
+      <div id="modal-content"></div>
+    </div>
+  </div>
+
+  <div id="day-modal">
+    <div class="day-modal-inner">
+      <button class="modal-close" onclick="closeDayModal()" aria-label="Close day details">&times;</button>
+      <div id="day-modal-content"></div>
+    </div>
+  </div>
+<script>
+const destinations = [{"id":"D001","name":"Banff National Park","province":"Alberta","lat":51.496,"lng":-115.928,"tags":["nature","hiking","skiing","wildlife","photography"],"cost":180,"rating":4.8,"seasons":["Winter","Spring","Summer","Fall"],"type":"National Park","hotels":[{"name":"Fairmont Banff Springs","cost":280,"lat":51.169,"lng":-115.57},{"name":"Moraine Lake Lodge","cost":250,"lat":51.33,"lng":-116.183}],"meals":[{"name":"Bow Valley Grill","cost":55,"type":"fine dining","lat":51.169,"lng":-115.57},{"name":"The Maple Leaf","cost":35,"type":"casual","lat":51.168,"lng":-115.569},{"name":"Cilantro Bistro","cost":38,"type":"international","lat":51.167,"lng":-115.571}],"attractions":[{"name":"Lake Louise","cost":0,"type":"scenic","lat":51.426,"lng":-116.228},{"name":"Moraine Lake","cost":0,"type":"scenic","lat":51.33,"lng":-116.183},{"name":"Johnston Canyon","cost":0,"type":"hiking","lat":51.274,"lng":-115.749}],"reviews":75,"match":0,"weather":[{"month":1,"season":"Winter","temp":-0.9,"precip":53.2,"visitor_index":0.31},{"month":2,"season":"Winter","temp":2.2,"precip":48.4,"visitor_index":0.3},{"month":3,"season":"Spring","temp":8.6,"precip":76.5,"visitor_index":0.45},{"month":4,"season":"Spring","temp":18.6,"precip":98.2,"visitor_index":0.76},{"month":5,"season":"Spring","temp":28.0,"precip":60.5,"visitor_index":0.82},{"month":6,"season":"Summer","temp":32.6,"precip":91.2,"visitor_index":0.9},{"month":7,"season":"Summer","temp":34.3,"precip":86.2,"visitor_index":0.99},{"month":8,"season":"Summer","temp":34.0,"precip":34.9,"visitor_index":0.87},{"month":9,"season":"Fall","temp":26.2,"precip":101.8,"visitor_index":0.8},{"month":10,"season":"Fall","temp":20.6,"precip":71.8,"visitor_index":0.65},{"month":11,"season":"Fall","temp":12.6,"precip":81.5,"visitor_index":0.27},{"month":12,"season":"Winter","temp":3.3,"precip":75.4,"visitor_index":0.37}]},{"id":"D002","name":"Whistler Blackcomb","province":"British Columbia","lat":50.116,"lng":-122.957,"tags":["skiing","adventure","nature","food","nightlife"],"cost":320,"rating":4.7,"seasons":["Winter","Summer"],"type":"Resort","hotels":[{"name":"Fairmont Whistler","cost":350,"lat":50.116,"lng":-122.954},{"name":"Four Seasons Whistler","cost":400,"lat":50.117,"lng":-122.955}],"meals":[{"name":"Alta Bistro","cost":65,"type":"fine dining","lat":50.116,"lng":-122.954},{"name":"Sidecut Brewing","cost":28,"type":"casual","lat":50.115,"lng":-122.953},{"name":"Bearfoot Bistro","cost":75,"type":"gourmet","lat":50.114,"lng":-122.952}],"attractions":[{"name":"Whistler Peak","cost":30,"type":"skiing","lat":50.13,"lng":-122.95},{"name":"Peak 2 Peak Gondola","cost":35,"type":"scenic","lat":50.12,"lng":-122.955},{"name":"Whistler Village","cost":0,"type":"shopping","lat":50.116,"lng":-122.954}],"reviews":83,"match":0,"weather":[{"month":1,"season":"Winter","temp":-0.3,"precip":68.0,"visitor_index":0.34},{"month":2,"season":"Winter","temp":0.9,"precip":74.3,"visitor_index":0.29},{"month":3,"season":"Spring","temp":10.4,"precip":75.5,"visitor_index":0.58},{"month":4,"season":"Spring","temp":21.0,"precip":86.9,"visitor_index":0.77},{"month":5,"season":"Spring","temp":28.0,"precip":60.6,"visitor_index":0.84},{"month":6,"season":"Summer","temp":33.4,"precip":53.8,"visitor_index":1.02},{"month":7,"season":"Summer","temp":36.6,"precip":42.9,"visitor_index":1.06},{"month":8,"season":"Summer","temp":35.7,"precip":101.0,"visitor_index":0.82},{"month":9,"season":"Fall","temp":28.1,"precip":60.7,"visitor_index":0.86},{"month":10,"season":"Fall","temp":22.1,"precip":66.2,"visitor_index":0.54},{"month":11,"season":"Fall","temp":11.5,"precip":66.5,"visitor_index":0.23},{"month":12,"season":"Winter","temp":4.1,"precip":70.0,"visitor_index":0.35}]},{"id":"D003","name":"Old Quebec City","province":"Quebec","lat":46.814,"lng":-71.208,"tags":["history","culture","food","photography","architecture"],"cost":150,"rating":4.6,"seasons":["Spring","Summer","Fall"],"type":"City","hotels":[{"name":"Fairmont Chateau Frontenac","cost":280,"lat":46.814,"lng":-71.208},{"name":"Hotel de la Paix","cost":180,"lat":46.813,"lng":-71.209}],"meals":[{"name":"Le Continental","cost":58,"type":"french","lat":46.814,"lng":-71.208},{"name":"CafÃ©-Boulud","cost":42,"type":"casual","lat":46.813,"lng":-71.209},{"name":"L'Ã‰chaude","cost":50,"type":"bistro","lat":46.812,"lng":-71.21}],"attractions":[{"name":"Montmorency Falls","cost":15,"type":"scenic","lat":46.884,"lng":-71.155},{"name":"Basilica-Cathedral","cost":5,"type":"cultural","lat":46.813,"lng":-71.208},{"name":"Museum of Civilization","cost":20,"type":"museum","lat":46.812,"lng":-71.213}],"reviews":73,"match":0,"weather":[{"month":1,"season":"Winter","temp":3.7,"precip":84.5,"visitor_index":0.22},{"month":2,"season":"Winter","temp":4.2,"precip":14.3,"visitor_index":0.26},{"month":3,"season":"Spring","temp":12.9,"precip":51.7,"visitor_index":0.52},{"month":4,"season":"Spring","temp":20.6,"precip":76.0,"visitor_index":0.67},{"month":5,"season":"Spring","temp":30.2,"precip":58.1,"visitor_index":0.74},{"month":6,"season":"Summer","temp":34.0,"precip":79.4,"visitor_index":1.02},{"month":7,"season":"Summer","temp":40.2,"precip":66.5,"visitor_index":1.01},{"month":8,"season":"Summer","temp":36.4,"precip":54.6,"visitor_index":0.9},{"month":9,"season":"Fall","temp":33.1,"precip":73.7,"visitor_index":0.88},{"month":10,"season":"Fall","temp":24.7,"precip":45.8,"visitor_index":0.61},{"month":11,"season":"Fall","temp":15.4,"precip":41.2,"visitor_index":0.28},{"month":12,"season":"Winter","temp":6.9,"precip":92.1,"visitor_index":0.3}]},{"id":"D004","name":"Algonquin Provincial Park","province":"Ontario","lat":45.531,"lng":-78.354,"tags":["nature","wildlife","hiking","photography","camping"],"cost":90,"rating":4.5,"seasons":["Spring","Summer","Fall"],"type":"Provincial Park","hotels":[{"name":"Algonquin Park Lodge","cost":150,"lat":45.5,"lng":-78.5},{"name":"Mew Lake Campground","cost":40,"lat":45.501,"lng":-78.499}],"meals":[{"name":"Park Restaurant","cost":32,"type":"casual","lat":45.5,"lng":-78.5},{"name":"Lakeside Grill","cost":28,"type":"bbq","lat":45.499,"lng":-78.501},{"name":"Nature Cafe","cost":18,"type":"snacks","lat":45.501,"lng":-78.499}],"attractions":[{"name":"Lake Opeongo","cost":0,"type":"canoeing","lat":45.515,"lng":-78.48},{"name":"Hiking Trails","cost":0,"type":"hiking","lat":45.5,"lng":-78.5},{"name":"Wildlife Viewing","cost":0,"type":"nature","lat":45.49,"lng":-78.51}],"reviews":51,"match":0,"weather":[{"month":1,"season":"Winter","temp":4.3,"precip":41.3,"visitor_index":0.23},{"month":2,"season":"Winter","temp":7.3,"precip":74.6,"visitor_index":0.36},{"month":3,"season":"Spring","temp":13.9,"precip":101.2,"visitor_index":0.53},{"month":4,"season":"Spring","temp":22.9,"precip":66.9,"visitor_index":0.76},{"month":5,"season":"Spring","temp":30.3,"precip":47.0,"visitor_index":0.78},{"month":6,"season":"Summer","temp":34.0,"precip":62.8,"visitor_index":0.91},{"month":7,"season":"Summer","temp":40.2,"precip":77.3,"visitor_index":0.98},{"month":8,"season":"Summer","temp":40.8,"precip":30.8,"visitor_index":0.96},{"month":9,"season":"Fall","temp":32.8,"precip":25.7,"visitor_index":0.94},{"month":10,"season":"Fall","temp":25.0,"precip":42.5,"visitor_index":0.53},{"month":11,"season":"Fall","temp":15.9,"precip":57.5,"visitor_index":0.31},{"month":12,"season":"Winter","temp":7.8,"precip":72.7,"visitor_index":0.38}]},{"id":"D005","name":"Vancouver Stanley Park","province":"British Columbia","lat":49.301,"lng":-123.148,"tags":["nature","urban","photography","family","beaches"],"cost":130,"rating":4.7,"seasons":["Spring","Summer","Fall"],"type":"City","hotels":[{"name":"Fairmont Pacific Rim","cost":320,"lat":49.32,"lng":-123.161},{"name":"Rosewood Hotel Georgia","cost":280,"lat":49.321,"lng":-123.16}],"meals":[{"name":"Hawksworth Restaurant","cost":68,"type":"fine dining","lat":49.321,"lng":-123.16},{"name":"Botanist Bar & Grill","cost":45,"type":"casual","lat":49.322,"lng":-123.161},{"name":"West Coast View Cafe","cost":28,"type":"cafe","lat":49.319,"lng":-123.162}],"attractions":[{"name":"Seawall Walk","cost":0,"type":"scenic","lat":49.32,"lng":-123.161},{"name":"Stanley Park","cost":0,"type":"park","lat":49.323,"lng":-123.165},{"name":"Vancouver Aquarium","cost":35,"type":"museum","lat":49.324,"lng":-123.168}],"reviews":57,"match":0,"weather":[{"month":1,"season":"Winter","temp":-1.7,"precip":57.0,"visitor_index":0.18},{"month":2,"season":"Winter","temp":3.6,"precip":40.4,"visitor_index":0.31},{"month":3,"season":"Spring","temp":11.6,"precip":41.0,"visitor_index":0.55},{"month":4,"season":"Spring","temp":19.8,"precip":95.1,"visitor_index":0.68},{"month":5,"season":"Spring","temp":27.4,"precip":73.7,"visitor_index":0.78},{"month":6,"season":"Summer","temp":32.4,"precip":50.4,"visitor_index":1.0},{"month":7,"season":"Summer","temp":38.6,"precip":21.3,"visitor_index":1.0},{"month":8,"season":"Summer","temp":36.9,"precip":63.9,"visitor_index":0.97},{"month":9,"season":"Fall","temp":29.2,"precip":56.3,"visitor_index":0.83},{"month":10,"season":"Fall","temp":22.4,"precip":52.2,"visitor_index":0.63},{"month":11,"season":"Fall","temp":12.6,"precip":47.8,"visitor_index":0.27},{"month":12,"season":"Winter","temp":6.6,"precip":0.0,"visitor_index":0.42}]},{"id":"D006","name":"Cavendish Beach PEI","province":"Prince Edward Island","lat":46.498,"lng":-63.396,"tags":["beaches","nature","family","food","history"],"cost":120,"rating":4.4,"seasons":["Summer"],"type":"Beach","hotels":[{"name":"Cavendish Beach Resort","cost":140,"lat":46.367,"lng":-63.333},{"name":"Beachside Inn","cost":100,"lat":46.366,"lng":-63.334}],"meals":[{"name":"Island Harvest","cost":38,"type":"seafood","lat":46.367,"lng":-63.333},{"name":"Boardwalk Cafe","cost":25,"type":"casual","lat":46.366,"lng":-63.334},{"name":"Beach Bistro","cost":32,"type":"grill","lat":46.365,"lng":-63.335}],"attractions":[{"name":"Cavendish Beach","cost":0,"type":"beach","lat":46.368,"lng":-63.332},{"name":"Green Gables Site","cost":15,"type":"cultural","lat":46.37,"lng":-63.33},{"name":"Brackley Beach","cost":0,"type":"beach","lat":46.38,"lng":-63.32}],"reviews":81,"match":0,"weather":[{"month":1,"season":"Winter","temp":2.4,"precip":26.4,"visitor_index":0.32},{"month":2,"season":"Winter","temp":5.9,"precip":71.8,"visitor_index":0.17},{"month":3,"season":"Spring","temp":13.7,"precip":45.2,"visitor_index":0.53},{"month":4,"season":"Spring","temp":23.1,"precip":42.5,"visitor_index":0.73},{"month":5,"season":"Spring","temp":30.0,"precip":18.6,"visitor_index":0.86},{"month":6,"season":"Summer","temp":34.6,"precip":42.9,"visitor_index":0.98},{"month":7,"season":"Summer","temp":39.6,"precip":58.9,"visitor_index":1.03},{"month":8,"season":"Summer","temp":37.0,"precip":45.2,"visitor_index":0.89},{"month":9,"season":"Fall","temp":33.3,"precip":57.7,"visitor_index":0.85},{"month":10,"season":"Fall","temp":24.4,"precip":50.3,"visitor_index":0.59},{"month":11,"season":"Fall","temp":15.2,"precip":72.1,"visitor_index":0.37},{"month":12,"season":"Winter","temp":7.7,"precip":83.7,"visitor_index":0.35}]},{"id":"D007","name":"Niagara Falls","province":"Ontario","lat":43.096,"lng":-79.071,"tags":["nature","photography","family","adventure"],"cost":140,"rating":4.5,"seasons":["Spring","Summer","Fall"],"type":"Natural Wonder","hotels":[{"name":"Fallsview Hilton","cost":200,"lat":43.09,"lng":-79.085},{"name":"Clifton Hotel","cost":150,"lat":43.089,"lng":-79.086}],"meals":[{"name":"The Keg Steakhouse","cost":52,"type":"steakhouse","lat":43.09,"lng":-79.085},{"name":"Skylon Tower Restaurant","cost":48,"type":"fine dining","lat":43.087,"lng":-79.088},{"name":"Table Rock House","cost":35,"type":"casual","lat":43.09,"lng":-79.083}],"attractions":[{"name":"Niagara Falls Viewing","cost":0,"type":"scenic","lat":43.089,"lng":-79.084},{"name":"Journey Behind the Falls","cost":30,"type":"tour","lat":43.09,"lng":-79.083},{"name":"Hornblower Cruise","cost":35,"type":"tour","lat":43.091,"lng":-79.085}],"reviews":73,"match":0,"weather":[{"month":1,"season":"Winter","temp":4.5,"precip":45.5,"visitor_index":0.32},{"month":2,"season":"Winter","temp":7.6,"precip":74.6,"visitor_index":0.25},{"month":3,"season":"Spring","temp":15.0,"precip":73.7,"visitor_index":0.4},{"month":4,"season":"Spring","temp":27.0,"precip":54.3,"visitor_index":0.6},{"month":5,"season":"Spring","temp":33.1,"precip":60.7,"visitor_index":0.8},{"month":6,"season":"Summer","temp":38.9,"precip":74.9,"visitor_index":1.01},{"month":7,"season":"Summer","temp":42.4,"precip":57.9,"visitor_index":1.09},{"month":8,"season":"Summer","temp":39.4,"precip":62.8,"visitor_index":0.9},{"month":9,"season":"Fall","temp":34.7,"precip":43.1,"visitor_index":0.71},{"month":10,"season":"Fall","temp":27.1,"precip":65.6,"visitor_index":0.67},{"month":11,"season":"Fall","temp":16.7,"precip":83.1,"visitor_index":0.42},{"month":12,"season":"Winter","temp":9.6,"precip":34.2,"visitor_index":0.38}]},{"id":"D008","name":"Churchill Manitoba (Polar Bears)","province":"Manitoba","lat":58.767,"lng":-94.165,"tags":["wildlife","nature","photography","adventure"],"cost":380,"rating":4.9,"seasons":["Fall","Winter"],"type":"Wildlife Destination","hotels":[{"name":"Polar Inn","cost":220,"lat":58.769,"lng":-94.169},{"name":"Arctic Kingdom Lodge","cost":280,"lat":58.77,"lng":-94.168}],"meals":[{"name":"Seaport Restaurant","cost":42,"type":"northern cuisine","lat":58.769,"lng":-94.169},{"name":"Trader's Table","cost":38,"type":"casual","lat":58.77,"lng":-94.168},{"name":"Arctic Cafe","cost":25,"type":"cafe","lat":58.768,"lng":-94.17}],"attractions":[{"name":"Polar Bear Watching","cost":150,"type":"wildlife","lat":58.78,"lng":-94.18},{"name":"Northern Lights","cost":0,"type":"scenic","lat":58.769,"lng":-94.169},{"name":"Hudson Bay","cost":0,"type":"scenic","lat":58.771,"lng":-94.167}],"reviews":67,"match":0,"weather":[{"month":1,"season":"Winter","temp":-6.8,"precip":71.3,"visitor_index":0.27},{"month":2,"season":"Winter","temp":-2.3,"precip":37.7,"visitor_index":0.21},{"month":3,"season":"Spring","temp":4.3,"precip":14.5,"visitor_index":0.49},{"month":4,"season":"Spring","temp":16.3,"precip":59.8,"visitor_index":0.64},{"month":5,"season":"Spring","temp":21.1,"precip":59.0,"visitor_index":0.81},{"month":6,"season":"Summer","temp":26.8,"precip":39.2,"visitor_index":1.08},{"month":7,"season":"Summer","temp":30.4,"precip":74.5,"visitor_index":0.97},{"month":8,"season":"Summer","temp":30.5,"precip":54.9,"visitor_index":0.91},{"month":9,"season":"Fall","temp":21.2,"precip":40.1,"visitor_index":0.83},{"month":10,"season":"Fall","temp":14.7,"precip":42.9,"visitor_index":0.57},{"month":11,"season":"Fall","temp":6.9,"precip":47.4,"visitor_index":0.29},{"month":12,"season":"Winter","temp":-1.8,"precip":21.7,"visitor_index":0.33}]},{"id":"D009","name":"Cape Breton Highlands","province":"Nova Scotia","lat":46.723,"lng":-60.607,"tags":["hiking","nature","culture","photography","scenic"],"cost":100,"rating":4.6,"seasons":["Summer","Fall"],"type":"National Park","hotels":[{"name":"Cape Smokey Resort","cost":130,"lat":46.715,"lng":-60.424},{"name":"Keltic Lodge","cost":160,"lat":46.72,"lng":-60.42}],"meals":[{"name":"Copper Kettle","cost":40,"type":"seafood","lat":46.715,"lng":-60.424},{"name":"Lakeside Grill","cost":32,"type":"casual","lat":46.716,"lng":-60.425},{"name":"Mountain View Cafe","cost":22,"type":"cafe","lat":46.714,"lng":-60.423}],"attractions":[{"name":"Cabot Trail","cost":0,"type":"scenic drive","lat":46.7,"lng":-60.43},{"name":"Hiking Trails","cost":0,"type":"hiking","lat":46.715,"lng":-60.424},{"name":"Cultural Museums","cost":15,"type":"cultural","lat":46.71,"lng":-60.425}],"reviews":77,"match":0,"weather":[{"month":1,"season":"Winter","temp":2.5,"precip":45.3,"visitor_index":0.35},{"month":2,"season":"Winter","temp":6.2,"precip":74.4,"visitor_index":0.39},{"month":3,"season":"Spring","temp":12.1,"precip":73.0,"visitor_index":0.47},{"month":4,"season":"Spring","temp":24.7,"precip":99.7,"visitor_index":0.7},{"month":5,"season":"Spring","temp":30.6,"precip":87.2,"visitor_index":0.79},{"month":6,"season":"Summer","temp":34.6,"precip":77.5,"visitor_index":1.0},{"month":7,"season":"Summer","temp":39.4,"precip":43.3,"visitor_index":0.91},{"month":8,"season":"Summer","temp":38.4,"precip":78.1,"visitor_index":0.89},{"month":9,"season":"Fall","temp":32.6,"precip":45.9,"visitor_index":0.75},{"month":10,"season":"Fall","temp":24.1,"precip":58.3,"visitor_index":0.64},{"month":11,"season":"Fall","temp":14.4,"precip":87.4,"visitor_index":0.4},{"month":12,"season":"Winter","temp":7.2,"precip":85.0,"visitor_index":0.35}]},{"id":"D010","name":"Montreal Food & Culture","province":"Quebec","lat":45.508,"lng":-73.588,"tags":["food","culture","urban","history","nightlife"],"cost":160,"rating":4.7,"seasons":["Spring","Summer","Fall"],"type":"City","hotels":[{"name":"Fairmont The Queen Elizabeth","cost":250,"lat":45.502,"lng":-73.567},{"name":"Hotel de l'Institut","cost":180,"lat":45.501,"lng":-73.568}],"meals":[{"name":"Maison Boulud","cost":72,"type":"french","lat":45.502,"lng":-73.567},{"name":"Joe Beef","cost":55,"type":"bistro","lat":45.5,"lng":-73.57},{"name":"Schwartz's Deli","cost":18,"type":"deli","lat":45.499,"lng":-73.569}],"attractions":[{"name":"Old Montreal","cost":0,"type":"historic","lat":45.501,"lng":-73.56},{"name":"Montreal Museum","cost":20,"type":"museum","lat":45.5,"lng":-73.568},{"name":"Notre-Dame Basilica","cost":10,"type":"architectural","lat":45.502,"lng":-73.562}],"reviews":92,"match":0,"weather":[{"month":1,"season":"Winter","temp":4.2,"precip":80.9,"visitor_index":0.34},{"month":2,"season":"Winter","temp":6.1,"precip":0.9,"visitor_index":0.27},{"month":3,"season":"Spring","temp":12.5,"precip":40.4,"visitor_index":0.51},{"month":4,"season":"Spring","temp":22.7,"precip":43.5,"visitor_index":0.65},{"month":5,"season":"Spring","temp":30.4,"precip":82.4,"visitor_index":0.77},{"month":6,"season":"Summer","temp":35.6,"precip":50.9,"visitor_index":1.02},{"month":7,"season":"Summer","temp":40.6,"precip":0.0,"visitor_index":1.05},{"month":8,"season":"Summer","temp":40.6,"precip":39.0,"visitor_index":0.85},{"month":9,"season":"Fall","temp":31.7,"precip":44.9,"visitor_index":0.81},{"month":10,"season":"Fall","temp":23.2,"precip":37.6,"visitor_index":0.68},{"month":11,"season":"Fall","temp":15.2,"precip":84.9,"visitor_index":0.32},{"month":12,"season":"Winter","temp":6.3,"precip":72.7,"visitor_index":0.39}]},{"id":"D011","name":"Jasper Dark Sky Preserve","province":"Alberta","lat":52.873,"lng":-117.954,"tags":["nature","photography","hiking","adventure","astronomy"],"cost":170,"rating":4.8,"seasons":["Summer","Fall","Winter"],"type":"National Park","hotels":[{"name":"Fairmont Jasper Park Lodge","cost":300,"lat":52.873,"lng":-117.297},{"name":"Jasper Inn","cost":200,"lat":52.874,"lng":-117.296}],"meals":[{"name":"Seasons Restaurant","cost":55,"type":"fine dining","lat":52.873,"lng":-117.297},{"name":"Edith Cavell Dining","cost":42,"type":"casual","lat":52.872,"lng":-117.298},{"name":"Jasper Brewing Co","cost":30,"type":"brewery","lat":52.874,"lng":-117.296}],"attractions":[{"name":"Maligne Lake","cost":0,"type":"scenic","lat":52.735,"lng":-117.48},{"name":"Stargazing","cost":0,"type":"night","lat":52.873,"lng":-117.297},{"name":"Hiking Trails","cost":0,"type":"hiking","lat":52.88,"lng":-117.3}],"reviews":78,"match":0,"weather":[{"month":1,"season":"Winter","temp":-2.9,"precip":64.9,"visitor_index":0.32},{"month":2,"season":"Winter","temp":1.3,"precip":83.6,"visitor_index":0.32},{"month":3,"season":"Spring","temp":6.2,"precip":50.5,"visitor_index":0.65},{"month":4,"season":"Spring","temp":18.3,"precip":107.4,"visitor_index":0.77},{"month":5,"season":"Spring","temp":25.8,"precip":66.0,"visitor_index":0.8},{"month":6,"season":"Summer","temp":28.9,"precip":60.4,"visitor_index":1.06},{"month":7,"season":"Summer","temp":34.0,"precip":68.2,"visitor_index":1.04},{"month":8,"season":"Summer","temp":32.7,"precip":51.0,"visitor_index":0.85},{"month":9,"season":"Fall","temp":25.8,"precip":34.2,"visitor_index":0.75},{"month":10,"season":"Fall","temp":21.0,"precip":41.7,"visitor_index":0.61},{"month":11,"season":"Fall","temp":10.1,"precip":83.6,"visitor_index":0.37},{"month":12,"season":"Winter","temp":3.5,"precip":66.1,"visitor_index":0.39}]},{"id":"D012","name":"Tofino Surf & Rainforest","province":"British Columbia","lat":49.153,"lng":-125.908,"tags":["beaches","adventure","nature","wildlife","surfing"],"cost":200,"rating":4.6,"seasons":["Summer","Fall"],"type":"Coastal","hotels":[{"name":"Wickaninnish Inn","cost":350,"lat":49.153,"lng":-125.891},{"name":"Crystal Cove Beachfront Resort","cost":280,"lat":49.152,"lng":-125.892}],"meals":[{"name":"The Pointe Restaurant","cost":65,"type":"fine dining","lat":49.153,"lng":-125.891},{"name":"Common Loaf Baking Co","cost":28,"type":"bakery","lat":49.153,"lng":-125.89},{"name":"Driftwood Cafe","cost":32,"type":"casual","lat":49.152,"lng":-125.892}],"attractions":[{"name":"Long Beach Surfing","cost":0,"type":"beach","lat":49.16,"lng":-125.88},{"name":"Pacific Rim National Park","cost":10,"type":"park","lat":49.153,"lng":-125.891},{"name":"Wildlife Watching","cost":40,"type":"tour","lat":49.151,"lng":-125.893}],"reviews":88,"match":0,"weather":[{"month":1,"season":"Winter","temp":-0.8,"precip":98.9,"visitor_index":0.26},{"month":2,"season":"Winter","temp":4.0,"precip":81.2,"visitor_index":0.27},{"month":3,"season":"Spring","temp":11.4,"precip":75.3,"visitor_index":0.59},{"month":4,"season":"Spring","temp":19.9,"precip":34.3,"visitor_index":0.67},{"month":5,"season":"Spring","temp":28.6,"precip":61.2,"visitor_index":0.78},{"month":6,"season":"Summer","temp":31.5,"precip":69.4,"visitor_index":1.1},{"month":7,"season":"Summer","temp":37.8,"precip":72.2,"visitor_index":1.03},{"month":8,"season":"Summer","temp":36.8,"precip":78.6,"visitor_index":0.92},{"month":9,"season":"Fall","temp":29.1,"precip":44.1,"visitor_index":0.79},{"month":10,"season":"Fall","temp":22.7,"precip":53.7,"visitor_index":0.62},{"month":11,"season":"Fall","temp":13.8,"precip":76.7,"visitor_index":0.36},{"month":12,"season":"Winter","temp":5.5,"precip":33.8,"visitor_index":0.38}]},{"id":"D013","name":"Toronto Waterfront & Museums","province":"Ontario","lat":43.638,"lng":-79.382,"tags":["urban","culture","food","family","history"],"cost":190,"rating":4.4,"seasons":["Spring","Summer","Fall"],"type":"City","hotels":[],"meals":[],"attractions":[],"reviews":75,"match":0,"weather":[{"month":1,"season":"Winter","temp":4.6,"precip":23.3,"visitor_index":0.37},{"month":2,"season":"Winter","temp":7.7,"precip":67.6,"visitor_index":0.37},{"month":3,"season":"Spring","temp":13.9,"precip":71.5,"visitor_index":0.49},{"month":4,"season":"Spring","temp":24.3,"precip":44.6,"visitor_index":0.78},{"month":5,"season":"Spring","temp":32.1,"precip":74.0,"visitor_index":0.71},{"month":6,"season":"Summer","temp":38.7,"precip":81.0,"visitor_index":1.0},{"month":7,"season":"Summer","temp":41.3,"precip":68.0,"visitor_index":1.11},{"month":8,"season":"Summer","temp":38.8,"precip":75.6,"visitor_index":0.85},{"month":9,"season":"Fall","temp":33.5,"precip":55.0,"visitor_index":0.78},{"month":10,"season":"Fall","temp":26.5,"precip":37.3,"visitor_index":0.65},{"month":11,"season":"Fall","temp":15.7,"precip":70.8,"visitor_index":0.28},{"month":12,"season":"Winter","temp":8.4,"precip":64.0,"visitor_index":0.32}]},{"id":"D014","name":"Icefields Parkway Drive","province":"Alberta","lat":52.217,"lng":-117.206,"tags":["nature","photography","hiking","scenic","adventure"],"cost":140,"rating":4.9,"seasons":["Summer","Fall"],"type":"Scenic Route","hotels":[],"meals":[],"attractions":[],"reviews":74,"match":0,"weather":[{"month":1,"season":"Winter","temp":-1.9,"precip":31.5,"visitor_index":0.32},{"month":2,"season":"Winter","temp":0.2,"precip":51.0,"visitor_index":0.31},{"month":3,"season":"Spring","temp":7.3,"precip":58.8,"visitor_index":0.42},{"month":4,"season":"Spring","temp":18.7,"precip":95.3,"visitor_index":0.84},{"month":5,"season":"Spring","temp":26.2,"precip":75.8,"visitor_index":0.71},{"month":6,"season":"Summer","temp":32.6,"precip":75.5,"visitor_index":0.98},{"month":7,"season":"Summer","temp":36.3,"precip":54.9,"visitor_index":0.98},{"month":8,"season":"Summer","temp":34.6,"precip":38.7,"visitor_index":0.95},{"month":9,"season":"Fall","temp":26.0,"precip":39.0,"visitor_index":0.75},{"month":10,"season":"Fall","temp":20.8,"precip":47.7,"visitor_index":0.53},{"month":11,"season":"Fall","temp":10.5,"precip":59.4,"visitor_index":0.24},{"month":12,"season":"Winter","temp":1.9,"precip":102.2,"visitor_index":0.36}]},{"id":"D015","name":"Fundy National Park","province":"New Brunswick","lat":45.59,"lng":-64.98,"tags":["nature","hiking","wildlife","beaches","family"],"cost":95,"rating":4.5,"seasons":["Spring","Summer","Fall"],"type":"National Park","hotels":[],"meals":[],"attractions":[],"reviews":70,"match":0,"weather":[{"month":1,"season":"Winter","temp":2.7,"precip":52.7,"visitor_index":0.28},{"month":2,"season":"Winter","temp":6.7,"precip":79.0,"visitor_index":0.28},{"month":3,"season":"Spring","temp":11.8,"precip":85.5,"visitor_index":0.5},{"month":4,"season":"Spring","temp":24.8,"precip":15.1,"visitor_index":0.71},{"month":5,"season":"Spring","temp":33.0,"precip":52.9,"visitor_index":0.79},{"month":6,"season":"Summer","temp":36.4,"precip":48.8,"visitor_index":0.98},{"month":7,"season":"Summer","temp":39.7,"precip":47.5,"visitor_index":1.06},{"month":8,"season":"Summer","temp":39.5,"precip":65.0,"visitor_index":0.94},{"month":9,"season":"Fall","temp":31.8,"precip":44.5,"visitor_index":0.77},{"month":10,"season":"Fall","temp":25.1,"precip":38.8,"visitor_index":0.57},{"month":11,"season":"Fall","temp":15.5,"precip":102.5,"visitor_index":0.16},{"month":12,"season":"Winter","temp":7.9,"precip":94.5,"visitor_index":0.41}]},{"id":"D016","name":"Kelowna Wine Country","province":"British Columbia","lat":49.888,"lng":-119.496,"tags":["food","culture","nature","scenic","photography"],"cost":220,"rating":4.6,"seasons":["Summer","Fall"],"type":"Wine Region","hotels":[],"meals":[],"attractions":[],"reviews":72,"match":0,"weather":[{"month":1,"season":"Winter","temp":0.6,"precip":62.0,"visitor_index":0.27},{"month":2,"season":"Winter","temp":0.6,"precip":64.1,"visitor_index":0.26},{"month":3,"season":"Spring","temp":9.0,"precip":50.0,"visitor_index":0.59},{"month":4,"season":"Spring","temp":22.2,"precip":64.3,"visitor_index":0.68},{"month":5,"season":"Spring","temp":26.7,"precip":69.4,"visitor_index":0.89},{"month":6,"season":"Summer","temp":32.6,"precip":12.4,"visitor_index":1.03},{"month":7,"season":"Summer","temp":37.8,"precip":28.3,"visitor_index":1.01},{"month":8,"season":"Summer","temp":36.3,"precip":58.5,"visitor_index":0.86},{"month":9,"season":"Fall","temp":29.8,"precip":51.9,"visitor_index":0.73},{"month":10,"season":"Fall","temp":19.8,"precip":85.2,"visitor_index":0.63},{"month":11,"season":"Fall","temp":12.9,"precip":51.2,"visitor_index":0.27},{"month":12,"season":"Winter","temp":3.8,"precip":51.4,"visitor_index":0.29}]},{"id":"D017","name":"Ottawa Parliament Hill","province":"Ontario","lat":45.424,"lng":-75.7,"tags":["history","culture","urban","family","architecture"],"cost":130,"rating":4.4,"seasons":["Spring","Summer","Fall"],"type":"City","hotels":[],"meals":[],"attractions":[],"reviews":74,"match":0,"weather":[{"month":1,"season":"Winter","temp":2.4,"precip":53.8,"visitor_index":0.33},{"month":2,"season":"Winter","temp":6.1,"precip":75.9,"visitor_index":0.37},{"month":3,"season":"Spring","temp":14.2,"precip":69.4,"visitor_index":0.5},{"month":4,"season":"Spring","temp":22.2,"precip":74.8,"visitor_index":0.78},{"month":5,"season":"Spring","temp":31.5,"precip":98.3,"visitor_index":0.72},{"month":6,"season":"Summer","temp":35.0,"precip":77.1,"visitor_index":1.01},{"month":7,"season":"Summer","temp":41.5,"precip":59.7,"visitor_index":0.96},{"month":8,"season":"Summer","temp":39.0,"precip":29.3,"visitor_index":0.84},{"month":9,"season":"Fall","temp":33.2,"precip":77.5,"visitor_index":0.82},{"month":10,"season":"Fall","temp":23.5,"precip":52.8,"visitor_index":0.54},{"month":11,"season":"Fall","temp":17.4,"precip":48.3,"visitor_index":0.25},{"month":12,"season":"Winter","temp":8.2,"precip":47.2,"visitor_index":0.47}]},{"id":"D018","name":"Yukon Northern Lights","province":"Yukon","lat":60.721,"lng":-135.057,"tags":["nature","photography","adventure","wildlife"],"cost":280,"rating":4.9,"seasons":["Winter","Fall"],"type":"Remote Wilderness","hotels":[],"meals":[],"attractions":[],"reviews":86,"match":0,"weather":[{"month":1,"season":"Winter","temp":-9.0,"precip":32.0,"visitor_index":0.19},{"month":2,"season":"Winter","temp":-5.3,"precip":48.8,"visitor_index":0.23},{"month":3,"season":"Spring","temp":2.9,"precip":73.3,"visitor_index":0.5},{"month":4,"season":"Spring","temp":13.1,"precip":73.3,"visitor_index":0.66},{"month":5,"season":"Spring","temp":18.7,"precip":76.4,"visitor_index":0.82},{"month":6,"season":"Summer","temp":24.9,"precip":43.1,"visitor_index":1.03},{"month":7,"season":"Summer","temp":28.0,"precip":58.0,"visitor_index":1.07},{"month":8,"season":"Summer","temp":27.0,"precip":28.5,"visitor_index":0.85},{"month":9,"season":"Fall","temp":21.7,"precip":65.1,"visitor_index":0.79},{"month":10,"season":"Fall","temp":13.2,"precip":69.7,"visitor_index":0.56},{"month":11,"season":"Fall","temp":5.0,"precip":45.4,"visitor_index":0.26},{"month":12,"season":"Winter","temp":-3.9,"precip":52.5,"visitor_index":0.4}]},{"id":"D019","name":"Gros Morne National Park","province":"Newfoundland","lat":49.597,"lng":-57.779,"tags":["hiking","nature","photography","culture","wildlife"],"cost":110,"rating":4.7,"seasons":["Summer","Fall"],"type":"National Park","hotels":[],"meals":[],"attractions":[],"reviews":83,"match":0,"weather":[{"month":1,"season":"Winter","temp":0.3,"precip":0.0,"visitor_index":0.26},{"month":2,"season":"Winter","temp":2.7,"precip":90.1,"visitor_index":0.25},{"month":3,"season":"Spring","temp":10.2,"precip":89.9,"visitor_index":0.43},{"month":4,"season":"Spring","temp":20.4,"precip":44.0,"visitor_index":0.67},{"month":5,"season":"Spring","temp":27.2,"precip":45.4,"visitor_index":0.94},{"month":6,"season":"Summer","temp":33.9,"precip":82.0,"visitor_index":1.02},{"month":7,"season":"Summer","temp":35.4,"precip":67.9,"visitor_index":1.05},{"month":8,"season":"Summer","temp":35.2,"precip":79.3,"visitor_index":0.94},{"month":9,"season":"Fall","temp":30.9,"precip":51.6,"visitor_index":0.75},{"month":10,"season":"Fall","temp":21.7,"precip":88.7,"visitor_index":0.51},{"month":11,"season":"Fall","temp":11.0,"precip":61.8,"visitor_index":0.28},{"month":12,"season":"Winter","temp":5.1,"precip":78.9,"visitor_index":0.37}]},{"id":"D020","name":"Calgary Stampede & Foothills","province":"Alberta","lat":51.044,"lng":-114.062,"tags":["culture","food","adventure","history","family"],"cost":160,"rating":4.5,"seasons":["Summer"],"type":"City/Event","hotels":[],"meals":[],"attractions":[],"reviews":74,"match":0,"weather":[{"month":1,"season":"Winter","temp":-2.9,"precip":100.9,"visitor_index":0.25},{"month":2,"season":"Winter","temp":0.9,"precip":82.1,"visitor_index":0.28},{"month":3,"season":"Spring","temp":8.9,"precip":69.7,"visitor_index":0.55},{"month":4,"season":"Spring","temp":18.6,"precip":90.4,"visitor_index":0.59},{"month":5,"season":"Spring","temp":27.7,"precip":43.2,"visitor_index":0.87},{"month":6,"season":"Summer","temp":32.1,"precip":46.5,"visitor_index":1.03},{"month":7,"season":"Summer","temp":36.9,"precip":72.8,"visitor_index":0.95},{"month":8,"season":"Summer","temp":34.5,"precip":59.9,"visitor_index":0.9},{"month":9,"season":"Fall","temp":28.7,"precip":19.7,"visitor_index":0.82},{"month":10,"season":"Fall","temp":20.7,"precip":43.2,"visitor_index":0.56},{"month":11,"season":"Fall","temp":11.8,"precip":0.0,"visitor_index":0.26},{"month":12,"season":"Winter","temp":3.1,"precip":70.7,"visitor_index":0.36}]},{"id":"D021","name":"Bay of Fundy","province":"New Brunswick","lat":45.254,"lng":-64.514,"tags":["nature","scenic","wildlife","photography"],"cost":110,"rating":4.7,"seasons":["Spring","Summer","Fall"],"type":"Natural Wonder","hotels":[],"meals":[],"attractions":[],"reviews":79,"match":0,"weather":[{"month":1,"season":"Winter","temp":3.1,"precip":90.8,"visitor_index":0.35},{"month":2,"season":"Winter","temp":7.2,"precip":50.0,"visitor_index":0.33},{"month":3,"season":"Spring","temp":13.1,"precip":56.1,"visitor_index":0.52},{"month":4,"season":"Spring","temp":22.7,"precip":89.9,"visitor_index":0.69},{"month":5,"season":"Spring","temp":31.9,"precip":89.1,"visitor_index":0.85},{"month":6,"season":"Summer","temp":34.9,"precip":68.9,"visitor_index":1.04},{"month":7,"season":"Summer","temp":41.2,"precip":37.7,"visitor_index":0.97},{"month":8,"season":"Summer","temp":40.3,"precip":44.8,"visitor_index":0.89},{"month":9,"season":"Fall","temp":33.9,"precip":59.0,"visitor_index":0.76},{"month":10,"season":"Fall","temp":24.4,"precip":66.7,"visitor_index":0.53},{"month":11,"season":"Fall","temp":16.1,"precip":66.7,"visitor_index":0.36},{"month":12,"season":"Winter","temp":9.0,"precip":45.7,"visitor_index":0.46}]},{"id":"D022","name":"Lake Louise","province":"Alberta","lat":51.425,"lng":-116.177,"tags":["nature","hiking","skiing","photography"],"cost":200,"rating":4.8,"seasons":["Winter","Summer","Fall"],"type":"Lake","hotels":[],"meals":[],"attractions":[],"reviews":65,"match":0,"weather":[{"month":1,"season":"Winter","temp":-1.6,"precip":35.3,"visitor_index":0.29},{"month":2,"season":"Winter","temp":3.1,"precip":63.3,"visitor_index":0.3},{"month":3,"season":"Spring","temp":10.3,"precip":31.4,"visitor_index":0.44},{"month":4,"season":"Spring","temp":17.1,"precip":67.5,"visitor_index":0.71},{"month":5,"season":"Spring","temp":28.2,"precip":64.9,"visitor_index":0.78},{"month":6,"season":"Summer","temp":31.7,"precip":62.4,"visitor_index":0.92},{"month":7,"season":"Summer","temp":38.4,"precip":70.4,"visitor_index":1.01},{"month":8,"season":"Summer","temp":35.3,"precip":74.2,"visitor_index":0.89},{"month":9,"season":"Fall","temp":27.1,"precip":72.0,"visitor_index":0.82},{"month":10,"season":"Fall","temp":19.9,"precip":88.4,"visitor_index":0.61},{"month":11,"season":"Fall","temp":12.4,"precip":87.8,"visitor_index":0.3},{"month":12,"season":"Winter","temp":4.0,"precip":76.2,"visitor_index":0.36}]},{"id":"D023","name":"St. John's Signal Hill","province":"Newfoundland","lat":47.572,"lng":-52.681,"tags":["history","scenic","photography","hiking"],"cost":90,"rating":4.5,"seasons":["Spring","Summer","Fall"],"type":"Historic Site","hotels":[],"meals":[],"attractions":[],"reviews":80,"match":0,"weather":[{"month":1,"season":"Winter","temp":1.6,"precip":62.5,"visitor_index":0.25},{"month":2,"season":"Winter","temp":6.9,"precip":31.9,"visitor_index":0.24},{"month":3,"season":"Spring","temp":12.9,"precip":74.3,"visitor_index":0.45},{"month":4,"season":"Spring","temp":22.2,"precip":89.4,"visitor_index":0.7},{"month":5,"season":"Spring","temp":32.2,"precip":25.5,"visitor_index":0.83},{"month":6,"season":"Summer","temp":35.7,"precip":77.8,"visitor_index":0.99},{"month":7,"season":"Summer","temp":38.3,"precip":68.9,"visitor_index":1.04},{"month":8,"season":"Summer","temp":38.2,"precip":80.8,"visitor_index":0.85},{"month":9,"season":"Fall","temp":30.3,"precip":41.2,"visitor_index":0.78},{"month":10,"season":"Fall","temp":24.6,"precip":62.2,"visitor_index":0.73},{"month":11,"season":"Fall","temp":14.8,"precip":61.2,"visitor_index":0.31},{"month":12,"season":"Winter","temp":5.9,"precip":58.8,"visitor_index":0.46}]},{"id":"D024","name":"Whitehorse Yukon River","province":"Yukon","lat":60.721,"lng":-135.056,"tags":["nature","adventure","wildlife","photography"],"cost":170,"rating":4.6,"seasons":["Summer","Fall"],"type":"River","hotels":[],"meals":[],"attractions":[],"reviews":78,"match":0,"weather":[{"month":1,"season":"Winter","temp":-8.2,"precip":44.1,"visitor_index":0.25},{"month":2,"season":"Winter","temp":-5.7,"precip":61.5,"visitor_index":0.36},{"month":3,"season":"Spring","temp":0.4,"precip":53.6,"visitor_index":0.51},{"month":4,"season":"Spring","temp":9.9,"precip":43.3,"visitor_index":0.67},{"month":5,"season":"Spring","temp":18.9,"precip":63.8,"visitor_index":0.79},{"month":6,"season":"Summer","temp":24.2,"precip":68.6,"visitor_index":1.09},{"month":7,"season":"Summer","temp":30.3,"precip":21.5,"visitor_index":1.03},{"month":8,"season":"Summer","temp":27.5,"precip":63.1,"visitor_index":0.88},{"month":9,"season":"Fall","temp":20.8,"precip":63.0,"visitor_index":0.77},{"month":10,"season":"Fall","temp":12.8,"precip":51.0,"visitor_index":0.61},{"month":11,"season":"Fall","temp":5.3,"precip":77.1,"visitor_index":0.28},{"month":12,"season":"Winter","temp":-3.0,"precip":79.3,"visitor_index":0.46}]},{"id":"D025","name":"Saskatoon Meewasin Valley","province":"Saskatchewan","lat":52.133,"lng":-106.67,"tags":["nature","hiking","scenic","photography"],"cost":80,"rating":4.4,"seasons":["Spring","Summer","Fall"],"type":"Park","hotels":[],"meals":[],"attractions":[],"reviews":72,"match":0,"weather":[{"month":1,"season":"Winter","temp":-1.9,"precip":55.6,"visitor_index":0.31},{"month":2,"season":"Winter","temp":0.0,"precip":56.1,"visitor_index":0.34},{"month":3,"season":"Spring","temp":8.8,"precip":54.6,"visitor_index":0.51},{"month":4,"season":"Spring","temp":17.3,"precip":74.1,"visitor_index":0.7},{"month":5,"season":"Spring","temp":25.9,"precip":52.8,"visitor_index":0.8},{"month":6,"season":"Summer","temp":30.7,"precip":73.2,"visitor_index":0.98},{"month":7,"season":"Summer","temp":36.7,"precip":89.3,"visitor_index":0.96},{"month":8,"season":"Summer","temp":34.2,"precip":47.0,"visitor_index":0.88},{"month":9,"season":"Fall","temp":29.2,"precip":53.8,"visitor_index":0.82},{"month":10,"season":"Fall","temp":20.7,"precip":40.0,"visitor_index":0.56},{"month":11,"season":"Fall","temp":9.9,"precip":42.3,"visitor_index":0.16},{"month":12,"season":"Winter","temp":3.7,"precip":101.1,"visitor_index":0.41}]},{"id":"D026","name":"Magdalen Islands","province":"Quebec","lat":47.383,"lng":-61.866,"tags":["beaches","nature","wildlife","photography"],"cost":140,"rating":4.7,"seasons":["Summer"],"type":"Islands","hotels":[],"meals":[],"attractions":[],"reviews":69,"match":0,"weather":[{"month":1,"season":"Winter","temp":0.3,"precip":47.1,"visitor_index":0.28},{"month":2,"season":"Winter","temp":3.7,"precip":77.2,"visitor_index":0.34},{"month":3,"season":"Spring","temp":10.6,"precip":74.5,"visitor_index":0.58},{"month":4,"season":"Spring","temp":23.6,"precip":117.3,"visitor_index":0.65},{"month":5,"season":"Spring","temp":32.5,"precip":52.9,"visitor_index":0.77},{"month":6,"season":"Summer","temp":35.0,"precip":48.4,"visitor_index":1.02},{"month":7,"season":"Summer","temp":37.4,"precip":55.2,"visitor_index":1.06},{"month":8,"season":"Summer","temp":37.7,"precip":62.8,"visitor_index":0.92},{"month":9,"season":"Fall","temp":31.9,"precip":26.9,"visitor_index":0.83},{"month":10,"season":"Fall","temp":23.4,"precip":63.3,"visitor_index":0.65},{"month":11,"season":"Fall","temp":13.5,"precip":39.7,"visitor_index":0.2},{"month":12,"season":"Winter","temp":6.2,"precip":86.6,"visitor_index":0.39}]},{"id":"D027","name":"Bruce Peninsula National Park","province":"Ontario","lat":45.229,"lng":-81.525,"tags":["nature","hiking","photography","camping"],"cost":120,"rating":4.8,"seasons":["Spring","Summer","Fall"],"type":"National Park","hotels":[],"meals":[],"attractions":[],"reviews":74,"match":0,"weather":[{"month":1,"season":"Winter","temp":2.0,"precip":50.3,"visitor_index":0.23},{"month":2,"season":"Winter","temp":5.2,"precip":67.8,"visitor_index":0.24},{"month":3,"season":"Spring","temp":14.4,"precip":58.6,"visitor_index":0.5},{"month":4,"season":"Spring","temp":23.0,"precip":75.5,"visitor_index":0.74},{"month":5,"season":"Spring","temp":31.7,"precip":71.3,"visitor_index":0.79},{"month":6,"season":"Summer","temp":36.9,"precip":53.2,"visitor_index":1.0},{"month":7,"season":"Summer","temp":40.1,"precip":50.9,"visitor_index":0.97},{"month":8,"season":"Summer","temp":39.8,"precip":86.2,"visitor_index":0.96},{"month":9,"season":"Fall","temp":31.1,"precip":85.8,"visitor_index":0.78},{"month":10,"season":"Fall","temp":25.9,"precip":41.9,"visitor_index":0.61},{"month":11,"season":"Fall","temp":16.6,"precip":30.3,"visitor_index":0.33},{"month":12,"season":"Winter","temp":9.7,"precip":56.5,"visitor_index":0.47}]},{"id":"D028","name":"Mont Tremblant","province":"Quebec","lat":46.21,"lng":-74.584,"tags":["skiing","nature","adventure","photography"],"cost":210,"rating":4.6,"seasons":["Winter","Summer","Fall"],"type":"Resort","hotels":[],"meals":[],"attractions":[],"reviews":73,"match":0,"weather":[{"month":1,"season":"Winter","temp":2.4,"precip":77.0,"visitor_index":0.19},{"month":2,"season":"Winter","temp":8.0,"precip":89.9,"visitor_index":0.29},{"month":3,"season":"Spring","temp":10.6,"precip":65.8,"visitor_index":0.43},{"month":4,"season":"Spring","temp":23.0,"precip":68.2,"visitor_index":0.65},{"month":5,"season":"Spring","temp":31.7,"precip":76.1,"visitor_index":0.85},{"month":6,"season":"Summer","temp":35.6,"precip":31.7,"visitor_index":1.05},{"month":7,"season":"Summer","temp":39.3,"precip":32.2,"visitor_index":1.07},{"month":8,"season":"Summer","temp":40.7,"precip":59.2,"visitor_index":1.01},{"month":9,"season":"Fall","temp":31.7,"precip":52.4,"visitor_index":0.77},{"month":10,"season":"Fall","temp":26.2,"precip":44.4,"visitor_index":0.64},{"month":11,"season":"Fall","temp":15.0,"precip":50.8,"visitor_index":0.35},{"month":12,"season":"Winter","temp":7.2,"precip":51.9,"visitor_index":0.46}]},{"id":"D029","name":"Prince Albert National Park","province":"Saskatchewan","lat":53.571,"lng":-106.465,"tags":["nature","wildlife","hiking","photography"],"cost":100,"rating":4.5,"seasons":["Spring","Summer","Fall"],"type":"National Park","hotels":[],"meals":[],"attractions":[],"reviews":69,"match":0,"weather":[{"month":1,"season":"Winter","temp":-1.3,"precip":72.9,"visitor_index":0.27},{"month":2,"season":"Winter","temp":-0.4,"precip":61.6,"visitor_index":0.32},{"month":3,"season":"Spring","temp":6.1,"precip":74.5,"visitor_index":0.5},{"month":4,"season":"Spring","temp":15.4,"precip":41.4,"visitor_index":0.67},{"month":5,"season":"Spring","temp":25.0,"precip":97.8,"visitor_index":0.81},{"month":6,"season":"Summer","temp":29.2,"precip":64.4,"visitor_index":0.98},{"month":7,"season":"Summer","temp":34.4,"precip":71.6,"visitor_index":1.06},{"month":8,"season":"Summer","temp":33.0,"precip":92.8,"visitor_index":0.95},{"month":9,"season":"Fall","temp":25.4,"precip":104.2,"visitor_index":0.82},{"month":10,"season":"Fall","temp":18.2,"precip":93.1,"visitor_index":0.7},{"month":11,"season":"Fall","temp":10.0,"precip":49.9,"visitor_index":0.29},{"month":12,"season":"Winter","temp":2.8,"precip":85.6,"visitor_index":0.43}]},{"id":"D031","name":"Ontario Winter Adventure","province":"Ontario","lat":55.149,"lng":-137.799,"tags":["photography","wildlife","family","skiing"],"cost":427,"rating":4.4,"seasons":["Winter"],"type":"City","hotels":[],"meals":[],"attractions":[],"reviews":83,"match":0,"weather":[{"month":1,"season":"Winter","temp":-4.0,"precip":90.0,"visitor_index":0.28},{"month":2,"season":"Winter","temp":-0.1,"precip":54.2,"visitor_index":0.32},{"month":3,"season":"Spring","temp":5.8,"precip":58.9,"visitor_index":0.48},{"month":4,"season":"Spring","temp":17.2,"precip":45.3,"visitor_index":0.66},{"month":5,"season":"Spring","temp":26.0,"precip":79.6,"visitor_index":0.68},{"month":6,"season":"Summer","temp":28.3,"precip":23.8,"visitor_index":0.95},{"month":7,"season":"Summer","temp":29.7,"precip":57.3,"visitor_index":0.94},{"month":8,"season":"Summer","temp":31.9,"precip":27.5,"visitor_index":0.9},{"month":9,"season":"Fall","temp":24.5,"precip":90.0,"visitor_index":0.87},{"month":10,"season":"Fall","temp":18.7,"precip":53.5,"visitor_index":0.7},{"month":11,"season":"Fall","temp":7.3,"precip":31.9,"visitor_index":0.3},{"month":12,"season":"Winter","temp":3.1,"precip":56.0,"visitor_index":0.39}]},{"id":"D032","name":"Ontario Spring Adventure","province":"Ontario","lat":54.219,"lng":-137.203,"tags":["hiking","wildlife","family","culture"],"cost":358,"rating":4.3,"seasons":["Spring"],"type":"Wildlife Destination","hotels":[],"meals":[],"attractions":[],"reviews":81,"match":0,"weather":[{"month":1,"season":"Winter","temp":-4.9,"precip":78.9,"visitor_index":0.35},{"month":2,"season":"Winter","temp":0.4,"precip":47.4,"visitor_index":0.26},{"month":3,"season":"Spring","temp":5.3,"precip":61.7,"visitor_index":0.45},{"month":4,"season":"Spring","temp":15.4,"precip":51.5,"visitor_index":0.68},{"month":5,"season":"Spring","temp":24.0,"precip":69.3,"visitor_index":0.8},{"month":6,"season":"Summer","temp":29.3,"precip":63.7,"visitor_index":0.95},{"month":7,"season":"Summer","temp":33.7,"precip":63.0,"visitor_index":0.92},{"month":8,"season":"Summer","temp":33.6,"precip":42.4,"visitor_index":0.9},{"month":9,"season":"Fall","temp":26.8,"precip":78.5,"visitor_index":0.8},{"month":10,"season":"Fall","temp":18.2,"precip":79.0,"visitor_index":0.63},{"month":11,"season":"Fall","temp":9.0,"precip":44.1,"visitor_index":0.2},{"month":12,"season":"Winter","temp":1.7,"precip":58.3,"visitor_index":0.46}]},{"id":"D033","name":"Ontario Summer Adventure","province":"Ontario","lat":56.604,"lng":-78.283,"tags":["food","wildlife","nightlife","history"],"cost":192,"rating":4.8,"seasons":["Summer"],"type":"National Park","hotels":[],"meals":[],"attractions":[],"reviews":71,"match":0,"weather":[{"month":1,"season":"Winter","temp":-4.8,"precip":86.7,"visitor_index":0.27},{"month":2,"season":"Winter","temp":-1.1,"precip":49.4,"visitor_index":0.34},{"month":3,"season":"Spring","temp":3.3,"precip":64.7,"visitor_index":0.4},{"month":4,"season":"Spring","temp":14.5,"precip":68.8,"visitor_index":0.67},{"month":5,"season":"Spring","temp":21.7,"precip":76.9,"visitor_index":0.79},{"month":6,"season":"Summer","temp":27.3,"precip":60.8,"visitor_index":1.13},{"month":7,"season":"Summer","temp":33.0,"precip":83.3,"visitor_index":1.02},{"month":8,"season":"Summer","temp":31.0,"precip":12.1,"visitor_index":0.87},{"month":9,"season":"Fall","temp":23.3,"precip":22.5,"visitor_index":0.74},{"month":10,"season":"Fall","temp":14.8,"precip":59.2,"visitor_index":0.64},{"month":11,"season":"Fall","temp":8.9,"precip":68.3,"visitor_index":0.25},{"month":12,"season":"Winter","temp":-2.1,"precip":24.9,"visitor_index":0.34}]},{"id":"D034","name":"Ontario Fall Adventure","province":"Ontario","lat":57.417,"lng":-125.95,"tags":["food","adventure","photography","skiing"],"cost":160,"rating":4.9,"seasons":["Fall"],"type":"Historic Site","hotels":[],"meals":[],"attractions":[],"reviews":73,"match":0,"weather":[{"month":1,"season":"Winter","temp":-6.7,"precip":56.8,"visitor_index":0.25},{"month":2,"season":"Winter","temp":-2.5,"precip":55.4,"visitor_index":0.3},{"month":3,"season":"Spring","temp":5.3,"precip":36.4,"visitor_index":0.52},{"month":4,"season":"Spring","temp":14.2,"precip":53.3,"visitor_index":0.74},{"month":5,"season":"Spring","temp":23.1,"precip":41.1,"visitor_index":0.79},{"month":6,"season":"Summer","temp":27.5,"precip":54.5,"visitor_index":1.03},{"month":7,"season":"Summer","temp":31.5,"precip":96.7,"visitor_index":0.92},{"month":8,"season":"Summer","temp":30.1,"precip":41.8,"visitor_index":0.93},{"month":9,"season":"Fall","temp":21.6,"precip":66.9,"visitor_index":0.77},{"month":10,"season":"Fall","temp":15.5,"precip":31.1,"visitor_index":0.58},{"month":11,"season":"Fall","temp":8.3,"precip":59.5,"visitor_index":0.33},{"month":12,"season":"Winter","temp":0.9,"precip":65.3,"visitor_index":0.37}]},{"id":"D035","name":"British Columbia Winter Adventure","province":"British Columbia","lat":44.942,"lng":-106.566,"tags":["adventure","beaches","history","photography"],"cost":463,"rating":4.3,"seasons":["Winter"],"type":"Remote Wilderness","hotels":[],"meals":[],"attractions":[],"reviews":63,"match":0,"weather":[{"month":1,"season":"Winter","temp":4.0,"precip":49.1,"visitor_index":0.27},{"month":2,"season":"Winter","temp":5.0,"precip":78.5,"visitor_index":0.28},{"month":3,"season":"Spring","temp":13.7,"precip":39.3,"visitor_index":0.52},{"month":4,"season":"Spring","temp":22.8,"precip":57.2,"visitor_index":0.74},{"month":5,"season":"Spring","temp":32.3,"precip":59.6,"visitor_index":0.71},{"month":6,"season":"Summer","temp":39.5,"precip":94.9,"visitor_index":1.04},{"month":7,"season":"Summer","temp":39.8,"precip":57.7,"visitor_index":0.97},{"month":8,"season":"Summer","temp":40.8,"precip":65.3,"visitor_index":0.86},{"month":9,"season":"Fall","temp":32.1,"precip":82.4,"visitor_index":0.88},{"month":10,"season":"Fall","temp":27.1,"precip":75.1,"visitor_index":0.59},{"month":11,"season":"Fall","temp":13.3,"precip":65.9,"visitor_index":0.3},{"month":12,"season":"Winter","temp":8.7,"precip":61.1,"visitor_index":0.33}]},{"id":"D036","name":"British Columbia Spring Adventure","province":"British Columbia","lat":53.188,"lng":-54.366,"tags":["food","hiking","culture","photography"],"cost":474,"rating":4.7,"seasons":["Spring"],"type":"River","hotels":[],"meals":[],"attractions":[],"reviews":68,"match":0,"weather":[{"month":1,"season":"Winter","temp":-2.1,"precip":72.6,"visitor_index":0.33},{"month":2,"season":"Winter","temp":1.3,"precip":72.1,"visitor_index":0.28},{"month":3,"season":"Spring","temp":7.3,"precip":61.8,"visitor_index":0.51},{"month":4,"season":"Spring","temp":18.4,"precip":72.9,"visitor_index":0.8},{"month":5,"season":"Spring","temp":27.6,"precip":61.6,"visitor_index":0.61},{"month":6,"season":"Summer","temp":31.6,"precip":49.2,"visitor_index":0.96},{"month":7,"season":"Summer","temp":34.0,"precip":51.1,"visitor_index":1.03},{"month":8,"season":"Summer","temp":31.8,"precip":38.4,"visitor_index":0.92},{"month":9,"season":"Fall","temp":27.0,"precip":72.8,"visitor_index":0.76},{"month":10,"season":"Fall","temp":18.4,"precip":49.9,"visitor_index":0.61},{"month":11,"season":"Fall","temp":11.8,"precip":19.1,"visitor_index":0.29},{"month":12,"season":"Winter","temp":1.0,"precip":27.0,"visitor_index":0.45}]},{"id":"D037","name":"British Columbia Summer Adventure","province":"British Columbia","lat":53.97,"lng":-77.998,"tags":["nature","urban","wildlife","photography"],"cost":90,"rating":4.8,"seasons":["Summer"],"type":"Provincial Park","hotels":[],"meals":[],"attractions":[],"reviews":85,"match":0,"weather":[{"month":1,"season":"Winter","temp":-2.7,"precip":69.0,"visitor_index":0.35},{"month":2,"season":"Winter","temp":-0.7,"precip":51.3,"visitor_index":0.41},{"month":3,"season":"Spring","temp":6.5,"precip":74.7,"visitor_index":0.5},{"month":4,"season":"Spring","temp":14.9,"precip":19.1,"visitor_index":0.67},{"month":5,"season":"Spring","temp":25.8,"precip":75.8,"visitor_index":0.85},{"month":6,"season":"Summer","temp":28.8,"precip":92.3,"visitor_index":0.95},{"month":7,"season":"Summer","temp":34.0,"precip":59.8,"visitor_index":0.99},{"month":8,"season":"Summer","temp":34.1,"precip":45.9,"visitor_index":0.83},{"month":9,"season":"Fall","temp":25.8,"precip":52.0,"visitor_index":0.97},{"month":10,"season":"Fall","temp":19.4,"precip":51.8,"visitor_index":0.55},{"month":11,"season":"Fall","temp":7.9,"precip":39.5,"visitor_index":0.31},{"month":12,"season":"Winter","temp":3.2,"precip":82.4,"visitor_index":0.41}]},{"id":"D038","name":"British Columbia Fall Adventure","province":"British Columbia","lat":50.222,"lng":-100.1,"tags":["adventure","skiing","beaches","urban"],"cost":157,"rating":4.7,"seasons":["Fall"],"type":"City","hotels":[],"meals":[],"attractions":[],"reviews":63,"match":0,"weather":[{"month":1,"season":"Winter","temp":-0.7,"precip":65.4,"visitor_index":0.27},{"month":2,"season":"Winter","temp":4.3,"precip":56.2,"visitor_index":0.3},{"month":3,"season":"Spring","temp":7.4,"precip":56.1,"visitor_index":0.54},{"month":4,"season":"Spring","temp":18.5,"precip":45.0,"visitor_index":0.74},{"month":5,"season":"Spring","temp":26.1,"precip":81.2,"visitor_index":0.77},{"month":6,"season":"Summer","temp":32.2,"precip":37.5,"visitor_index":1.02},{"month":7,"season":"Summer","temp":39.0,"precip":75.6,"visitor_index":0.96},{"month":8,"season":"Summer","temp":36.7,"precip":53.7,"visitor_index":0.97},{"month":9,"season":"Fall","temp":29.4,"precip":1.1,"visitor_index":0.75},{"month":10,"season":"Fall","temp":22.5,"precip":63.0,"visitor_index":0.55},{"month":11,"season":"Fall","temp":11.9,"precip":21.9,"visitor_index":0.3},{"month":12,"season":"Winter","temp":6.8,"precip":76.1,"visitor_index":0.51}]},{"id":"D039","name":"Quebec Winter Adventure","province":"Quebec","lat":54.573,"lng":-124.94,"tags":["family","wildlife","skiing","nightlife"],"cost":244,"rating":4.5,"seasons":["Winter"],"type":"Wine Region","hotels":[],"meals":[],"attractions":[],"reviews":73,"match":0,"weather":[{"month":1,"season":"Winter","temp":-2.8,"precip":80.5,"visitor_index":0.4},{"month":2,"season":"Winter","temp":-0.3,"precip":56.3,"visitor_index":0.35},{"month":3,"season":"Spring","temp":7.8,"precip":50.4,"visitor_index":0.46},{"month":4,"season":"Spring","temp":16.5,"precip":76.6,"visitor_index":0.74},{"month":5,"season":"Spring","temp":22.9,"precip":98.2,"visitor_index":0.77},{"month":6,"season":"Summer","temp":29.1,"precip":41.9,"visitor_index":1.13},{"month":7,"season":"Summer","temp":33.6,"precip":43.0,"visitor_index":1.04},{"month":8,"season":"Summer","temp":33.1,"precip":56.2,"visitor_index":0.94},{"month":9,"season":"Fall","temp":24.5,"precip":50.1,"visitor_index":0.7},{"month":10,"season":"Fall","temp":17.0,"precip":96.2,"visitor_index":0.68},{"month":11,"season":"Fall","temp":9.4,"precip":93.3,"visitor_index":0.29},{"month":12,"season":"Winter","temp":1.1,"precip":61.1,"visitor_index":0.39}]},{"id":"D040","name":"Quebec Spring Adventure","province":"Quebec","lat":56.008,"lng":-65.829,"tags":["beaches","nature","wildlife","family"],"cost":462,"rating":4.5,"seasons":["Spring"],"type":"Scenic Route","hotels":[],"meals":[],"attractions":[],"reviews":63,"match":0,"weather":[{"month":1,"season":"Winter","temp":-5.0,"precip":82.9,"visitor_index":0.31},{"month":2,"season":"Winter","temp":-1.0,"precip":80.6,"visitor_index":0.32},{"month":3,"season":"Spring","temp":4.3,"precip":32.9,"visitor_index":0.51},{"month":4,"season":"Spring","temp":15.1,"precip":61.7,"visitor_index":0.7},{"month":5,"season":"Spring","temp":25.8,"precip":33.4,"visitor_index":0.7},{"month":6,"season":"Summer","temp":28.6,"precip":52.5,"visitor_index":1.02},{"month":7,"season":"Summer","temp":32.8,"precip":85.7,"visitor_index":0.92},{"month":8,"season":"Summer","temp":30.7,"precip":68.6,"visitor_index":0.94},{"month":9,"season":"Fall","temp":26.4,"precip":79.1,"visitor_index":0.8},{"month":10,"season":"Fall","temp":16.4,"precip":48.7,"visitor_index":0.57},{"month":11,"season":"Fall","temp":8.9,"precip":65.1,"visitor_index":0.23},{"month":12,"season":"Winter","temp":-0.2,"precip":77.6,"visitor_index":0.42}]},{"id":"D041","name":"Quebec Summer Adventure","province":"Quebec","lat":44.258,"lng":-59.644,"tags":["history","family","adventure","wildlife"],"cost":385,"rating":4.6,"seasons":["Summer"],"type":"Remote Wilderness","hotels":[],"meals":[],"attractions":[],"reviews":66,"match":0,"weather":[{"month":1,"season":"Winter","temp":4.6,"precip":67.7,"visitor_index":0.38},{"month":2,"season":"Winter","temp":7.3,"precip":52.3,"visitor_index":0.25},{"month":3,"season":"Spring","temp":14.3,"precip":11.2,"visitor_index":0.49},{"month":4,"season":"Spring","temp":23.9,"precip":32.7,"visitor_index":0.65},{"month":5,"season":"Spring","temp":32.9,"precip":64.6,"visitor_index":0.81},{"month":6,"season":"Summer","temp":37.4,"precip":61.9,"visitor_index":1.06},{"month":7,"season":"Summer","temp":41.2,"precip":30.8,"visitor_index":1.08},{"month":8,"season":"Summer","temp":40.4,"precip":48.2,"visitor_index":0.84},{"month":9,"season":"Fall","temp":33.5,"precip":57.7,"visitor_index":0.88},{"month":10,"season":"Fall","temp":25.7,"precip":43.3,"visitor_index":0.64},{"month":11,"season":"Fall","temp":18.0,"precip":63.4,"visitor_index":0.33},{"month":12,"season":"Winter","temp":9.0,"precip":64.7,"visitor_index":0.46}]},{"id":"D042","name":"Quebec Fall Adventure","province":"Quebec","lat":45.715,"lng":-127.713,"tags":["family","culture","beaches","photography"],"cost":432,"rating":4.7,"seasons":["Fall"],"type":"Islands","hotels":[],"meals":[],"attractions":[],"reviews":72,"match":0,"weather":[{"month":1,"season":"Winter","temp":3.6,"precip":56.6,"visitor_index":0.37},{"month":2,"season":"Winter","temp":3.6,"precip":101.0,"visitor_index":0.21},{"month":3,"season":"Spring","temp":12.3,"precip":59.2,"visitor_index":0.49},{"month":4,"season":"Spring","temp":24.0,"precip":38.8,"visitor_index":0.71},{"month":5,"season":"Spring","temp":30.4,"precip":65.9,"visitor_index":0.8},{"month":6,"season":"Summer","temp":36.1,"precip":49.0,"visitor_index":0.97},{"month":7,"season":"Summer","temp":40.3,"precip":78.9,"visitor_index":0.97},{"month":8,"season":"Summer","temp":38.1,"precip":72.3,"visitor_index":0.9},{"month":9,"season":"Fall","temp":32.8,"precip":41.9,"visitor_index":0.71},{"month":10,"season":"Fall","temp":24.4,"precip":44.7,"visitor_index":0.6},{"month":11,"season":"Fall","temp":15.3,"precip":74.8,"visitor_index":0.29},{"month":12,"season":"Winter","temp":8.1,"precip":63.2,"visitor_index":0.41}]},{"id":"D043","name":"Alberta Winter Adventure","province":"Alberta","lat":49.878,"lng":-52.235,"tags":["skiing","culture","nightlife","hiking"],"cost":436,"rating":4.3,"seasons":["Winter"],"type":"Provincial Park","hotels":[],"meals":[],"attractions":[],"reviews":85,"match":0,"weather":[{"month":1,"season":"Winter","temp":-0.2,"precip":70.2,"visitor_index":0.26},{"month":2,"season":"Winter","temp":4.2,"precip":55.3,"visitor_index":0.23},{"month":3,"season":"Spring","temp":10.0,"precip":43.0,"visitor_index":0.53},{"month":4,"season":"Spring","temp":22.1,"precip":44.3,"visitor_index":0.72},{"month":5,"season":"Spring","temp":26.1,"precip":69.1,"visitor_index":0.76},{"month":6,"season":"Summer","temp":32.2,"precip":38.0,"visitor_index":1.04},{"month":7,"season":"Summer","temp":37.8,"precip":60.5,"visitor_index":0.96},{"month":8,"season":"Summer","temp":37.4,"precip":45.0,"visitor_index":0.79},{"month":9,"season":"Fall","temp":29.3,"precip":37.9,"visitor_index":0.85},{"month":10,"season":"Fall","temp":21.5,"precip":72.1,"visitor_index":0.67},{"month":11,"season":"Fall","temp":11.6,"precip":48.7,"visitor_index":0.3},{"month":12,"season":"Winter","temp":6.4,"precip":46.8,"visitor_index":0.37}]},{"id":"D044","name":"Alberta Spring Adventure","province":"Alberta","lat":45.904,"lng":-125.922,"tags":["urban","food","history","hiking"],"cost":247,"rating":4.5,"seasons":["Spring"],"type":"Remote Wilderness","hotels":[],"meals":[],"attractions":[],"reviews":91,"match":0,"weather":[{"month":1,"season":"Winter","temp":3.3,"precip":48.5,"visitor_index":0.31},{"month":2,"season":"Winter","temp":4.3,"precip":104.3,"visitor_index":0.23},{"month":3,"season":"Spring","temp":12.5,"precip":59.4,"visitor_index":0.6},{"month":4,"season":"Spring","temp":21.5,"precip":99.7,"visitor_index":0.74},{"month":5,"season":"Spring","temp":31.2,"precip":40.3,"visitor_index":0.83},{"month":6,"season":"Summer","temp":35.1,"precip":85.3,"visitor_index":0.95},{"month":7,"season":"Summer","temp":39.7,"precip":48.9,"visitor_index":0.95},{"month":8,"season":"Summer","temp":39.6,"precip":70.7,"visitor_index":0.96},{"month":9,"season":"Fall","temp":30.0,"precip":81.3,"visitor_index":0.93},{"month":10,"season":"Fall","temp":24.4,"precip":97.9,"visitor_index":0.59},{"month":11,"season":"Fall","temp":14.4,"precip":53.9,"visitor_index":0.35},{"month":12,"season":"Winter","temp":7.0,"precip":48.0,"visitor_index":0.43}]},{"id":"D045","name":"Alberta Summer Adventure","province":"Alberta","lat":53.053,"lng":-54.545,"tags":["nature","urban","hiking","culture"],"cost":434,"rating":4.5,"seasons":["Summer"],"type":"Historic Site","hotels":[],"meals":[],"attractions":[],"reviews":72,"match":0,"weather":[{"month":1,"season":"Winter","temp":-2.5,"precip":71.7,"visitor_index":0.31},{"month":2,"season":"Winter","temp":0.9,"precip":51.4,"visitor_index":0.31},{"month":3,"season":"Spring","temp":6.5,"precip":85.8,"visitor_index":0.47},{"month":4,"season":"Spring","temp":18.6,"precip":55.3,"visitor_index":0.71},{"month":5,"season":"Spring","temp":25.0,"precip":39.7,"visitor_index":0.71},{"month":6,"season":"Summer","temp":29.4,"precip":53.5,"visitor_index":1.01},{"month":7,"season":"Summer","temp":35.5,"precip":51.1,"visitor_index":0.96},{"month":8,"season":"Summer","temp":32.0,"precip":69.6,"visitor_index":0.97},{"month":9,"season":"Fall","temp":27.7,"precip":74.2,"visitor_index":0.83},{"month":10,"season":"Fall","temp":21.2,"precip":66.6,"visitor_index":0.63},{"month":11,"season":"Fall","temp":10.1,"precip":32.8,"visitor_index":0.27},{"month":12,"season":"Winter","temp":2.5,"precip":61.2,"visitor_index":0.5}]},{"id":"D046","name":"Alberta Fall Adventure","province":"Alberta","lat":45.119,"lng":-101.741,"tags":["nightlife","nature","photography","culture"],"cost":440,"rating":4.4,"seasons":["Fall"],"type":"Provincial Park","hotels":[],"meals":[],"attractions":[],"reviews":61,"match":0,"weather":[{"month":1,"season":"Winter","temp":3.5,"precip":83.6,"visitor_index":0.28},{"month":2,"season":"Winter","temp":6.1,"precip":33.4,"visitor_index":0.26},{"month":3,"season":"Spring","temp":13.9,"precip":60.2,"visitor_index":0.55},{"month":4,"season":"Spring","temp":23.6,"precip":53.0,"visitor_index":0.81},{"month":5,"season":"Spring","temp":31.3,"precip":83.3,"visitor_index":0.78},{"month":6,"season":"Summer","temp":37.1,"precip":78.6,"visitor_index":1.01},{"month":7,"season":"Summer","temp":38.1,"precip":60.4,"visitor_index":1.06},{"month":8,"season":"Summer","temp":39.9,"precip":68.9,"visitor_index":0.81},{"month":9,"season":"Fall","temp":31.7,"precip":68.2,"visitor_index":0.82},{"month":10,"season":"Fall","temp":26.6,"precip":57.1,"visitor_index":0.62},{"month":11,"season":"Fall","temp":16.4,"precip":40.3,"visitor_index":0.19},{"month":12,"season":"Winter","temp":8.8,"precip":63.5,"visitor_index":0.37}]},{"id":"D047","name":"Nova Scotia Winter Adventure","province":"Nova Scotia","lat":59.54,"lng":-113.737,"tags":["urban","culture","history","wildlife"],"cost":128,"rating":4.5,"seasons":["Winter"],"type":"Natural Wonder","hotels":[],"meals":[],"attractions":[],"reviews":72,"match":0,"weather":[{"month":1,"season":"Winter","temp":-9.0,"precip":72.6,"visitor_index":0.29},{"month":2,"season":"Winter","temp":-3.8,"precip":97.3,"visitor_index":0.19},{"month":3,"season":"Spring","temp":1.9,"precip":55.8,"visitor_index":0.57},{"month":4,"season":"Spring","temp":11.0,"precip":98.7,"visitor_index":0.71},{"month":5,"season":"Spring","temp":20.5,"precip":56.0,"visitor_index":0.78},{"month":6,"season":"Summer","temp":26.6,"precip":38.6,"visitor_index":1.02},{"month":7,"season":"Summer","temp":29.2,"precip":44.8,"visitor_index":1.13},{"month":8,"season":"Summer","temp":29.0,"precip":72.3,"visitor_index":0.96},{"month":9,"season":"Fall","temp":20.2,"precip":95.0,"visitor_index":0.67},{"month":10,"season":"Fall","temp":13.8,"precip":50.8,"visitor_index":0.63},{"month":11,"season":"Fall","temp":5.8,"precip":56.7,"visitor_index":0.3},{"month":12,"season":"Winter","temp":-3.4,"precip":30.1,"visitor_index":0.44}]},{"id":"D048","name":"Nova Scotia Spring Adventure","province":"Nova Scotia","lat":53.248,"lng":-71.481,"tags":["culture","nature","history","adventure"],"cost":300,"rating":4.3,"seasons":["Spring"],"type":"River","hotels":[],"meals":[],"attractions":[],"reviews":84,"match":0,"weather":[{"month":1,"season":"Winter","temp":-2.0,"precip":91.7,"visitor_index":0.26},{"month":2,"season":"Winter","temp":1.0,"precip":54.3,"visitor_index":0.36},{"month":3,"season":"Spring","temp":8.3,"precip":64.2,"visitor_index":0.48},{"month":4,"season":"Spring","temp":18.3,"precip":72.9,"visitor_index":0.67},{"month":5,"season":"Spring","temp":24.0,"precip":54.2,"visitor_index":0.88},{"month":6,"season":"Summer","temp":31.5,"precip":37.8,"visitor_index":0.94},{"month":7,"season":"Summer","temp":35.6,"precip":37.3,"visitor_index":1.03},{"month":8,"season":"Summer","temp":32.7,"precip":92.3,"visitor_index":0.86},{"month":9,"season":"Fall","temp":27.5,"precip":63.7,"visitor_index":0.81},{"month":10,"season":"Fall","temp":17.3,"precip":15.9,"visitor_index":0.59},{"month":11,"season":"Fall","temp":10.6,"precip":37.5,"visitor_index":0.25},{"month":12,"season":"Winter","temp":2.9,"precip":71.3,"visitor_index":0.39}]},{"id":"D049","name":"Nova Scotia Summer Adventure","province":"Nova Scotia","lat":59.696,"lng":-66.813,"tags":["photography","wildlife","nature","family"],"cost":499,"rating":4.6,"seasons":["Summer"],"type":"City","hotels":[],"meals":[],"attractions":[],"reviews":77,"match":0,"weather":[{"month":1,"season":"Winter","temp":-6.7,"precip":36.5,"visitor_index":0.28},{"month":2,"season":"Winter","temp":-2.9,"precip":61.4,"visitor_index":0.31},{"month":3,"season":"Spring","temp":4.8,"precip":32.0,"visitor_index":0.54},{"month":4,"season":"Spring","temp":14.1,"precip":53.5,"visitor_index":0.74},{"month":5,"season":"Spring","temp":19.5,"precip":46.3,"visitor_index":0.82},{"month":6,"season":"Summer","temp":26.3,"precip":82.4,"visitor_index":1.08},{"month":7,"season":"Summer","temp":29.4,"precip":83.9,"visitor_index":0.98},{"month":8,"season":"Summer","temp":29.4,"precip":64.1,"visitor_index":0.92},{"month":9,"season":"Fall","temp":21.9,"precip":27.9,"visitor_index":0.74},{"month":10,"season":"Fall","temp":14.6,"precip":26.3,"visitor_index":0.64},{"month":11,"season":"Fall","temp":6.3,"precip":66.5,"visitor_index":0.24},{"month":12,"season":"Winter","temp":-1.1,"precip":100.7,"visitor_index":0.41}]},{"id":"D050","name":"Nova Scotia Fall Adventure","province":"Nova Scotia","lat":44.627,"lng":-97.233,"tags":["hiking","culture","skiing","urban"],"cost":387,"rating":4.6,"seasons":["Fall"],"type":"Natural Wonder","hotels":[],"meals":[],"attractions":[],"reviews":68,"match":0,"weather":[{"month":1,"season":"Winter","temp":4.3,"precip":64.0,"visitor_index":0.33},{"month":2,"season":"Winter","temp":6.7,"precip":59.3,"visitor_index":0.35},{"month":3,"season":"Spring","temp":16.1,"precip":32.0,"visitor_index":0.49},{"month":4,"season":"Spring","temp":22.6,"precip":91.8,"visitor_index":0.67},{"month":5,"season":"Spring","temp":30.3,"precip":72.8,"visitor_index":0.89},{"month":6,"season":"Summer","temp":37.4,"precip":64.1,"visitor_index":1.02},{"month":7,"season":"Summer","temp":42.2,"precip":42.5,"visitor_index":0.99},{"month":8,"season":"Summer","temp":39.3,"precip":36.6,"visitor_index":0.88},{"month":9,"season":"Fall","temp":33.9,"precip":71.3,"visitor_index":0.83},{"month":10,"season":"Fall","temp":25.9,"precip":70.5,"visitor_index":0.56},{"month":11,"season":"Fall","temp":16.5,"precip":63.8,"visitor_index":0.31},{"month":12,"season":"Winter","temp":9.1,"precip":57.2,"visitor_index":0.38}]},{"id":"D051","name":"Manitoba Winter Adventure","province":"Manitoba","lat":48.036,"lng":-63.226,"tags":["food","wildlife","culture","family"],"cost":415,"rating":4.5,"seasons":["Winter"],"type":"River","hotels":[],"meals":[],"attractions":[],"reviews":78,"match":0,"weather":[{"month":1,"season":"Winter","temp":4.4,"precip":78.1,"visitor_index":0.32},{"month":2,"season":"Winter","temp":4.0,"precip":51.0,"visitor_index":0.29},{"month":3,"season":"Spring","temp":11.5,"precip":22.4,"visitor_index":0.42},{"month":4,"season":"Spring","temp":20.6,"precip":64.1,"visitor_index":0.69},{"month":5,"season":"Spring","temp":30.7,"precip":30.4,"visitor_index":0.76},{"month":6,"season":"Summer","temp":35.7,"precip":62.6,"visitor_index":1.04},{"month":7,"season":"Summer","temp":40.3,"precip":46.1,"visitor_index":1.0},{"month":8,"season":"Summer","temp":37.0,"precip":20.9,"visitor_index":0.88},{"month":9,"season":"Fall","temp":31.1,"precip":70.8,"visitor_index":0.83},{"month":10,"season":"Fall","temp":22.8,"precip":46.9,"visitor_index":0.66},{"month":11,"season":"Fall","temp":13.7,"precip":65.9,"visitor_index":0.31},{"month":12,"season":"Winter","temp":7.7,"precip":79.4,"visitor_index":0.34}]},{"id":"D052","name":"Manitoba Spring Adventure","province":"Manitoba","lat":51.324,"lng":-94.453,"tags":["hiking","wildlife","family","beaches"],"cost":223,"rating":4.3,"seasons":["Spring"],"type":"Wine Region","hotels":[],"meals":[],"attractions":[],"reviews":83,"match":0,"weather":[{"month":1,"season":"Winter","temp":-2.4,"precip":71.6,"visitor_index":0.3},{"month":2,"season":"Winter","temp":1.3,"precip":80.3,"visitor_index":0.31},{"month":3,"season":"Spring","temp":8.8,"precip":75.6,"visitor_index":0.48},{"month":4,"season":"Spring","temp":20.3,"precip":44.2,"visitor_index":0.73},{"month":5,"season":"Spring","temp":28.2,"precip":32.5,"visitor_index":0.78},{"month":6,"season":"Summer","temp":32.9,"precip":83.1,"visitor_index":0.99},{"month":7,"season":"Summer","temp":35.0,"precip":79.1,"visitor_index":1.06},{"month":8,"season":"Summer","temp":33.6,"precip":35.9,"visitor_index":0.91},{"month":9,"season":"Fall","temp":28.4,"precip":54.0,"visitor_index":0.83},{"month":10,"season":"Fall","temp":20.0,"precip":17.7,"visitor_index":0.58},{"month":11,"season":"Fall","temp":11.8,"precip":54.5,"visitor_index":0.24},{"month":12,"season":"Winter","temp":1.9,"precip":49.7,"visitor_index":0.44}]},{"id":"D053","name":"Manitoba Summer Adventure","province":"Manitoba","lat":54.18,"lng":-139.367,"tags":["family","urban","nature","wildlife"],"cost":84,"rating":4.8,"seasons":["Summer"],"type":"Historic Site","hotels":[],"meals":[],"attractions":[],"reviews":63,"match":0,"weather":[{"month":1,"season":"Winter","temp":-2.1,"precip":83.8,"visitor_index":0.26},{"month":2,"season":"Winter","temp":-1.5,"precip":69.9,"visitor_index":0.33},{"month":3,"season":"Spring","temp":7.0,"precip":19.7,"visitor_index":0.46},{"month":4,"season":"Spring","temp":16.6,"precip":69.7,"visitor_index":0.74},{"month":5,"season":"Spring","temp":24.8,"precip":66.6,"visitor_index":0.8},{"month":6,"season":"Summer","temp":30.3,"precip":66.3,"visitor_index":1.0},{"month":7,"season":"Summer","temp":33.3,"precip":61.6,"visitor_index":1.02},{"month":8,"season":"Summer","temp":32.9,"precip":67.6,"visitor_index":0.97},{"month":9,"season":"Fall","temp":25.9,"precip":47.0,"visitor_index":0.84},{"month":10,"season":"Fall","temp":17.2,"precip":38.4,"visitor_index":0.62},{"month":11,"season":"Fall","temp":10.1,"precip":35.1,"visitor_index":0.28},{"month":12,"season":"Winter","temp":1.0,"precip":50.3,"visitor_index":0.45}]},{"id":"D054","name":"Manitoba Fall Adventure","province":"Manitoba","lat":44.346,"lng":-119.056,"tags":["urban","nightlife","wildlife","culture"],"cost":117,"rating":4.7,"seasons":["Fall"],"type":"Park","hotels":[],"meals":[],"attractions":[],"reviews":87,"match":0,"weather":[{"month":1,"season":"Winter","temp":4.7,"precip":59.6,"visitor_index":0.27},{"month":2,"season":"Winter","temp":5.6,"precip":88.4,"visitor_index":0.33},{"month":3,"season":"Spring","temp":13.3,"precip":74.4,"visitor_index":0.5},{"month":4,"season":"Spring","temp":23.7,"precip":68.7,"visitor_index":0.66},{"month":5,"season":"Spring","temp":31.6,"precip":62.4,"visitor_index":0.78},{"month":6,"season":"Summer","temp":37.7,"precip":97.4,"visitor_index":0.96},{"month":7,"season":"Summer","temp":39.3,"precip":20.0,"visitor_index":0.99},{"month":8,"season":"Summer","temp":39.3,"precip":64.2,"visitor_index":0.91},{"month":9,"season":"Fall","temp":31.4,"precip":23.7,"visitor_index":0.81},{"month":10,"season":"Fall","temp":26.1,"precip":51.5,"visitor_index":0.52},{"month":11,"season":"Fall","temp":17.5,"precip":85.4,"visitor_index":0.31},{"month":12,"season":"Winter","temp":8.1,"precip":60.9,"visitor_index":0.33}]},{"id":"D055","name":"New Brunswick Winter Adventure","province":"New Brunswick","lat":47.617,"lng":-98.378,"tags":["food","wildlife","hiking","urban"],"cost":387,"rating":4.6,"seasons":["Winter"],"type":"Coastal","hotels":[],"meals":[],"attractions":[],"reviews":81,"match":0,"weather":[{"month":1,"season":"Winter","temp":2.6,"precip":61.6,"visitor_index":0.21},{"month":2,"season":"Winter","temp":4.2,"precip":69.3,"visitor_index":0.28},{"month":3,"season":"Spring","temp":11.3,"precip":35.5,"visitor_index":0.53},{"month":4,"season":"Spring","temp":20.9,"precip":16.9,"visitor_index":0.68},{"month":5,"season":"Spring","temp":30.5,"precip":52.3,"visitor_index":0.89},{"month":6,"season":"Summer","temp":35.0,"precip":66.8,"visitor_index":0.99},{"month":7,"season":"Summer","temp":38.5,"precip":54.7,"visitor_index":0.98},{"month":8,"season":"Summer","temp":38.1,"precip":41.3,"visitor_index":0.85},{"month":9,"season":"Fall","temp":29.4,"precip":100.9,"visitor_index":0.83},{"month":10,"season":"Fall","temp":23.8,"precip":38.8,"visitor_index":0.63},{"month":11,"season":"Fall","temp":14.4,"precip":64.3,"visitor_index":0.25},{"month":12,"season":"Winter","temp":6.7,"precip":51.5,"visitor_index":0.36}]},{"id":"D056","name":"New Brunswick Spring Adventure","province":"New Brunswick","lat":50.811,"lng":-63.982,"tags":["nature","urban","family","hiking"],"cost":81,"rating":4.5,"seasons":["Spring"],"type":"Historic Site","hotels":[],"meals":[],"attractions":[],"reviews":74,"match":0,"weather":[{"month":1,"season":"Winter","temp":-0.1,"precip":29.2,"visitor_index":0.33},{"month":2,"season":"Winter","temp":2.8,"precip":42.4,"visitor_index":0.26},{"month":3,"season":"Spring","temp":8.9,"precip":65.6,"visitor_index":0.49},{"month":4,"season":"Spring","temp":19.6,"precip":95.3,"visitor_index":0.67},{"month":5,"season":"Spring","temp":25.4,"precip":76.5,"visitor_index":0.88},{"month":6,"season":"Summer","temp":32.5,"precip":38.2,"visitor_index":0.99},{"month":7,"season":"Summer","temp":35.0,"precip":72.9,"visitor_index":0.93},{"month":8,"season":"Summer","temp":34.8,"precip":39.9,"visitor_index":0.91},{"month":9,"season":"Fall","temp":27.8,"precip":63.5,"visitor_index":0.8},{"month":10,"season":"Fall","temp":20.2,"precip":72.5,"visitor_index":0.6},{"month":11,"season":"Fall","temp":11.2,"precip":104.8,"visitor_index":0.32},{"month":12,"season":"Winter","temp":4.0,"precip":88.3,"visitor_index":0.49}]},{"id":"D057","name":"New Brunswick Summer Adventure","province":"New Brunswick","lat":58.211,"lng":-130.384,"tags":["wildlife","beaches","culture","nightlife"],"cost":121,"rating":4.6,"seasons":["Summer"],"type":"Scenic Route","hotels":[],"meals":[],"attractions":[],"reviews":80,"match":0,"weather":[{"month":1,"season":"Winter","temp":-6.6,"precip":66.9,"visitor_index":0.25},{"month":2,"season":"Winter","temp":-3.6,"precip":56.0,"visitor_index":0.31},{"month":3,"season":"Spring","temp":3.9,"precip":71.2,"visitor_index":0.51},{"month":4,"season":"Spring","temp":12.4,"precip":41.2,"visitor_index":0.67},{"month":5,"season":"Spring","temp":21.3,"precip":81.0,"visitor_index":0.74},{"month":6,"season":"Summer","temp":26.2,"precip":79.1,"visitor_index":0.99},{"month":7,"season":"Summer","temp":31.1,"precip":57.2,"visitor_index":1.01},{"month":8,"season":"Summer","temp":29.4,"precip":73.3,"visitor_index":0.82},{"month":9,"season":"Fall","temp":22.2,"precip":65.9,"visitor_index":0.83},{"month":10,"season":"Fall","temp":17.1,"precip":52.2,"visitor_index":0.67},{"month":11,"season":"Fall","temp":5.9,"precip":86.6,"visitor_index":0.34},{"month":12,"season":"Winter","temp":-2.3,"precip":66.1,"visitor_index":0.4}]},{"id":"D058","name":"New Brunswick Fall Adventure","province":"New Brunswick","lat":51.79,"lng":-63.045,"tags":["hiking","nightlife","culture","beaches"],"cost":75,"rating":4.7,"seasons":["Fall"],"type":"National Park","hotels":[],"meals":[],"attractions":[],"reviews":60,"match":0,"weather":[{"month":1,"season":"Winter","temp":-1.0,"precip":55.5,"visitor_index":0.28},{"month":2,"season":"Winter","temp":2.8,"precip":58.0,"visitor_index":0.34},{"month":3,"season":"Spring","temp":8.2,"precip":93.3,"visitor_index":0.47},{"month":4,"season":"Spring","temp":17.8,"precip":90.5,"visitor_index":0.68},{"month":5,"season":"Spring","temp":28.0,"precip":77.8,"visitor_index":0.79},{"month":6,"season":"Summer","temp":29.6,"precip":59.6,"visitor_index":1.01},{"month":7,"season":"Summer","temp":36.6,"precip":91.8,"visitor_index":0.97},{"month":8,"season":"Summer","temp":35.2,"precip":75.3,"visitor_index":0.95},{"month":9,"season":"Fall","temp":27.9,"precip":21.2,"visitor_index":0.79},{"month":10,"season":"Fall","temp":19.3,"precip":55.9,"visitor_index":0.65},{"month":11,"season":"Fall","temp":11.7,"precip":83.0,"visitor_index":0.32},{"month":12,"season":"Winter","temp":2.1,"precip":9.6,"visitor_index":0.41}]},{"id":"D059","name":"Prince Edward Island Winter Adventure","province":"Prince Edward Island","lat":61.411,"lng":-58.48,"tags":["wildlife","skiing","food","nightlife"],"cost":296,"rating":4.4,"seasons":["Winter"],"type":"Islands","hotels":[],"meals":[],"attractions":[],"reviews":73,"match":0,"weather":[{"month":1,"season":"Winter","temp":-9.0,"precip":40.5,"visitor_index":0.21},{"month":2,"season":"Winter","temp":-6.5,"precip":56.1,"visitor_index":0.33},{"month":3,"season":"Spring","temp":1.4,"precip":92.2,"visitor_index":0.45},{"month":4,"season":"Spring","temp":12.1,"precip":60.9,"visitor_index":0.73},{"month":5,"season":"Spring","temp":18.8,"precip":81.4,"visitor_index":0.81},{"month":6,"season":"Summer","temp":23.5,"precip":59.8,"visitor_index":0.99},{"month":7,"season":"Summer","temp":28.7,"precip":36.4,"visitor_index":1.0},{"month":8,"season":"Summer","temp":27.6,"precip":60.7,"visitor_index":0.97},{"month":9,"season":"Fall","temp":21.0,"precip":59.9,"visitor_index":0.81},{"month":10,"season":"Fall","temp":13.5,"precip":68.1,"visitor_index":0.51},{"month":11,"season":"Fall","temp":3.9,"precip":30.3,"visitor_index":0.36},{"month":12,"season":"Winter","temp":-3.9,"precip":56.1,"visitor_index":0.44}]},{"id":"D060","name":"Prince Edward Island Spring Adventure","province":"Prince Edward Island","lat":60.146,"lng":-125.512,"tags":["nature","food","photography","nightlife"],"cost":196,"rating":4.6,"seasons":["Spring"],"type":"Park","hotels":[],"meals":[],"attractions":[],"reviews":78,"match":0,"weather":[{"month":1,"season":"Winter","temp":-7.4,"precip":37.4,"visitor_index":0.3},{"month":2,"season":"Winter","temp":-5.2,"precip":25.1,"visitor_index":0.27},{"month":3,"season":"Spring","temp":2.0,"precip":57.7,"visitor_index":0.43},{"month":4,"season":"Spring","temp":13.3,"precip":58.0,"visitor_index":0.7},{"month":5,"season":"Spring","temp":20.5,"precip":44.2,"visitor_index":0.82},{"month":6,"season":"Summer","temp":24.8,"precip":42.1,"visitor_index":1.03},{"month":7,"season":"Summer","temp":30.6,"precip":74.5,"visitor_index":1.05},{"month":8,"season":"Summer","temp":27.6,"precip":28.0,"visitor_index":0.97},{"month":9,"season":"Fall","temp":23.2,"precip":90.9,"visitor_index":0.78},{"month":10,"season":"Fall","temp":13.0,"precip":38.7,"visitor_index":0.52},{"month":11,"season":"Fall","temp":5.0,"precip":92.1,"visitor_index":0.29},{"month":12,"season":"Winter","temp":-2.6,"precip":87.5,"visitor_index":0.38}]},{"id":"D061","name":"Prince Edward Island Summer Adventure","province":"Prince Edward Island","lat":45.941,"lng":-113.89,"tags":["nature","history","culture","beaches"],"cost":432,"rating":4.5,"seasons":["Summer"],"type":"Resort","hotels":[],"meals":[],"attractions":[],"reviews":81,"match":0,"weather":[{"month":1,"season":"Winter","temp":4.8,"precip":99.8,"visitor_index":0.29},{"month":2,"season":"Winter","temp":5.2,"precip":73.9,"visitor_index":0.28},{"month":3,"season":"Spring","temp":11.6,"precip":85.6,"visitor_index":0.56},{"month":4,"season":"Spring","temp":22.9,"precip":34.7,"visitor_index":0.64},{"month":5,"season":"Spring","temp":30.9,"precip":50.0,"visitor_index":0.78},{"month":6,"season":"Summer","temp":36.8,"precip":74.7,"visitor_index":1.07},{"month":7,"season":"Summer","temp":38.8,"precip":53.1,"visitor_index":1.04},{"month":8,"season":"Summer","temp":39.2,"precip":90.6,"visitor_index":0.92},{"month":9,"season":"Fall","temp":33.6,"precip":70.8,"visitor_index":0.85},{"month":10,"season":"Fall","temp":24.5,"precip":60.3,"visitor_index":0.65},{"month":11,"season":"Fall","temp":17.4,"precip":74.6,"visitor_index":0.3},{"month":12,"season":"Winter","temp":9.2,"precip":16.2,"visitor_index":0.33}]},{"id":"D062","name":"Prince Edward Island Fall Adventure","province":"Prince Edward Island","lat":54.099,"lng":-95.749,"tags":["culture","skiing","nature","beaches"],"cost":91,"rating":4.8,"seasons":["Fall"],"type":"City","hotels":[],"meals":[],"attractions":[],"reviews":88,"match":0,"weather":[{"month":1,"season":"Winter","temp":-2.6,"precip":60.3,"visitor_index":0.33},{"month":2,"season":"Winter","temp":-0.3,"precip":71.4,"visitor_index":0.26},{"month":3,"season":"Spring","temp":7.2,"precip":79.9,"visitor_index":0.56},{"month":4,"season":"Spring","temp":18.7,"precip":64.9,"visitor_index":0.71},{"month":5,"season":"Spring","temp":23.2,"precip":49.4,"visitor_index":0.79},{"month":6,"season":"Summer","temp":30.7,"precip":47.8,"visitor_index":1.04},{"month":7,"season":"Summer","temp":33.7,"precip":56.5,"visitor_index":1.01},{"month":8,"season":"Summer","temp":32.3,"precip":51.4,"visitor_index":0.81},{"month":9,"season":"Fall","temp":25.4,"precip":50.4,"visitor_index":0.77},{"month":10,"season":"Fall","temp":19.1,"precip":73.2,"visitor_index":0.61},{"month":11,"season":"Fall","temp":10.7,"precip":71.5,"visitor_index":0.29},{"month":12,"season":"Winter","temp":1.2,"precip":66.3,"visitor_index":0.43}]},{"id":"D063","name":"Saskatchewan Winter Adventure","province":"Saskatchewan","lat":54.306,"lng":-80.581,"tags":["wildlife","food","hiking","history"],"cost":176,"rating":4.6,"seasons":["Winter"],"type":"Resort","hotels":[],"meals":[],"attractions":[],"reviews":84,"match":0,"weather":[{"month":1,"season":"Winter","temp":-2.1,"precip":83.8,"visitor_index":0.27},{"month":2,"season":"Winter","temp":-0.6,"precip":73.4,"visitor_index":0.35},{"month":3,"season":"Spring","temp":7.5,"precip":58.7,"visitor_index":0.44},{"month":4,"season":"Spring","temp":15.5,"precip":65.5,"visitor_index":0.72},{"month":5,"season":"Spring","temp":23.4,"precip":60.9,"visitor_index":0.83},{"month":6,"season":"Summer","temp":28.4,"precip":82.1,"visitor_index":0.98},{"month":7,"season":"Summer","temp":34.8,"precip":49.3,"visitor_index":0.95},{"month":8,"season":"Summer","temp":32.1,"precip":58.1,"visitor_index":0.88},{"month":9,"season":"Fall","temp":25.3,"precip":66.7,"visitor_index":0.79},{"month":10,"season":"Fall","temp":18.5,"precip":25.8,"visitor_index":0.62},{"month":11,"season":"Fall","temp":9.4,"precip":92.2,"visitor_index":0.25},{"month":12,"season":"Winter","temp":-0.3,"precip":72.4,"visitor_index":0.42}]},{"id":"D064","name":"Saskatchewan Spring Adventure","province":"Saskatchewan","lat":54.768,"lng":-103.108,"tags":["history","beaches","culture","adventure"],"cost":183,"rating":4.4,"seasons":["Spring"],"type":"Historic Site","hotels":[],"meals":[],"attractions":[],"reviews":83,"match":0,"weather":[{"month":1,"season":"Winter","temp":-4.8,"precip":29.4,"visitor_index":0.38},{"month":2,"season":"Winter","temp":0.6,"precip":10.3,"visitor_index":0.28},{"month":3,"season":"Spring","temp":7.8,"precip":50.5,"visitor_index":0.48},{"month":4,"season":"Spring","temp":15.9,"precip":37.6,"visitor_index":0.61},{"month":5,"season":"Spring","temp":25.2,"precip":23.1,"visitor_index":0.81},{"month":6,"season":"Summer","temp":30.1,"precip":31.0,"visitor_index":0.95},{"month":7,"season":"Summer","temp":34.4,"precip":70.7,"visitor_index":0.97},{"month":8,"season":"Summer","temp":33.4,"precip":84.1,"visitor_index":0.91},{"month":9,"season":"Fall","temp":24.3,"precip":51.7,"visitor_index":0.81},{"month":10,"season":"Fall","temp":18.0,"precip":78.8,"visitor_index":0.52},{"month":11,"season":"Fall","temp":7.7,"precip":63.6,"visitor_index":0.28},{"month":12,"season":"Winter","temp":0.5,"precip":24.6,"visitor_index":0.4}]},{"id":"D065","name":"Saskatchewan Summer Adventure","province":"Saskatchewan","lat":47.535,"lng":-105.171,"tags":["urban","beaches","photography","nightlife"],"cost":211,"rating":4.9,"seasons":["Summer"],"type":"City","hotels":[],"meals":[],"attractions":[],"reviews":76,"match":0,"weather":[{"month":1,"season":"Winter","temp":1.5,"precip":73.1,"visitor_index":0.3},{"month":2,"season":"Winter","temp":4.5,"precip":83.5,"visitor_index":0.23},{"month":3,"season":"Spring","temp":12.1,"precip":26.6,"visitor_index":0.46},{"month":4,"season":"Spring","temp":20.4,"precip":75.6,"visitor_index":0.7},{"month":5,"season":"Spring","temp":29.6,"precip":37.9,"visitor_index":0.79},{"month":6,"season":"Summer","temp":33.8,"precip":67.7,"visitor_index":0.95},{"month":7,"season":"Summer","temp":39.9,"precip":26.5,"visitor_index":0.96},{"month":8,"season":"Summer","temp":39.3,"precip":51.3,"visitor_index":0.83},{"month":9,"season":"Fall","temp":30.8,"precip":50.5,"visitor_index":0.76},{"month":10,"season":"Fall","temp":22.5,"precip":115.4,"visitor_index":0.59},{"month":11,"season":"Fall","temp":12.7,"precip":89.9,"visitor_index":0.33},{"month":12,"season":"Winter","temp":5.8,"precip":41.3,"visitor_index":0.43}]},{"id":"D066","name":"Saskatchewan Fall Adventure","province":"Saskatchewan","lat":43.177,"lng":-85.338,"tags":["history","hiking","family","culture"],"cost":159,"rating":4.6,"seasons":["Fall"],"type":"Beach","hotels":[],"meals":[],"attractions":[],"reviews":82,"match":0,"weather":[{"month":1,"season":"Winter","temp":4.6,"precip":21.5,"visitor_index":0.39},{"month":2,"season":"Winter","temp":7.4,"precip":89.9,"visitor_index":0.36},{"month":3,"season":"Spring","temp":13.9,"precip":80.7,"visitor_index":0.47},{"month":4,"season":"Spring","temp":23.0,"precip":51.5,"visitor_index":0.72},{"month":5,"season":"Spring","temp":32.4,"precip":53.9,"visitor_index":0.86},{"month":6,"season":"Summer","temp":38.0,"precip":43.1,"visitor_index":1.04},{"month":7,"season":"Summer","temp":42.1,"precip":9.6,"visitor_index":1.02},{"month":8,"season":"Summer","temp":41.3,"precip":60.4,"visitor_index":0.94},{"month":9,"season":"Fall","temp":33.2,"precip":66.7,"visitor_index":0.72},{"month":10,"season":"Fall","temp":27.3,"precip":99.1,"visitor_index":0.55},{"month":11,"season":"Fall","temp":17.1,"precip":45.8,"visitor_index":0.31},{"month":12,"season":"Winter","temp":8.8,"precip":68.4,"visitor_index":0.44}]},{"id":"D067","name":"Yukon Winter Adventure","province":"Yukon","lat":60.732,"lng":-62.484,"tags":["wildlife","adventure","photography","skiing"],"cost":274,"rating":4.8,"seasons":["Winter"],"type":"City/Event","hotels":[],"meals":[],"attractions":[],"reviews":59,"match":0,"weather":[{"month":1,"season":"Winter","temp":-7.8,"precip":24.6,"visitor_index":0.35},{"month":2,"season":"Winter","temp":-4.4,"precip":76.6,"visitor_index":0.32},{"month":3,"season":"Spring","temp":1.9,"precip":80.6,"visitor_index":0.6},{"month":4,"season":"Spring","temp":10.7,"precip":81.6,"visitor_index":0.7},{"month":5,"season":"Spring","temp":19.6,"precip":29.3,"visitor_index":0.79},{"month":6,"season":"Summer","temp":23.7,"precip":50.7,"visitor_index":0.95},{"month":7,"season":"Summer","temp":28.3,"precip":51.9,"visitor_index":1.0},{"month":8,"season":"Summer","temp":26.1,"precip":31.1,"visitor_index":0.92},{"month":9,"season":"Fall","temp":19.9,"precip":81.5,"visitor_index":0.81},{"month":10,"season":"Fall","temp":14.3,"precip":88.2,"visitor_index":0.58},{"month":11,"season":"Fall","temp":4.1,"precip":77.4,"visitor_index":0.33},{"month":12,"season":"Winter","temp":-3.5,"precip":87.8,"visitor_index":0.39}]},{"id":"D068","name":"Yukon Spring Adventure","province":"Yukon","lat":54.622,"lng":-53.123,"tags":["urban","culture","nature","family"],"cost":203,"rating":4.9,"seasons":["Spring"],"type":"Provincial Park","hotels":[],"meals":[],"attractions":[],"reviews":59,"match":0,"weather":[{"month":1,"season":"Winter","temp":-3.7,"precip":60.4,"visitor_index":0.25},{"month":2,"season":"Winter","temp":-0.6,"precip":87.9,"visitor_index":0.32},{"month":3,"season":"Spring","temp":6.3,"precip":56.8,"visitor_index":0.52},{"month":4,"season":"Spring","temp":17.0,"precip":72.2,"visitor_index":0.68},{"month":5,"season":"Spring","temp":24.6,"precip":69.6,"visitor_index":0.75},{"month":6,"season":"Summer","temp":29.5,"precip":16.8,"visitor_index":1.02},{"month":7,"season":"Summer","temp":33.9,"precip":75.0,"visitor_index":0.98},{"month":8,"season":"Summer","temp":32.6,"precip":88.5,"visitor_index":0.97},{"month":9,"season":"Fall","temp":25.3,"precip":62.8,"visitor_index":0.86},{"month":10,"season":"Fall","temp":16.8,"precip":53.5,"visitor_index":0.67},{"month":11,"season":"Fall","temp":10.3,"precip":67.4,"visitor_index":0.22},{"month":12,"season":"Winter","temp":1.2,"precip":48.2,"visitor_index":0.42}]},{"id":"D069","name":"Yukon Summer Adventure","province":"Yukon","lat":60.84,"lng":-128.182,"tags":["hiking","beaches","culture","skiing"],"cost":189,"rating":4.5,"seasons":["Summer"],"type":"Wildlife Destination","hotels":[],"meals":[],"attractions":[],"reviews":81,"match":0,"weather":[{"month":1,"season":"Winter","temp":-9.2,"precip":39.5,"visitor_index":0.2},{"month":2,"season":"Winter","temp":-4.2,"precip":52.0,"visitor_index":0.31},{"month":3,"season":"Spring","temp":1.6,"precip":38.7,"visitor_index":0.44},{"month":4,"season":"Spring","temp":10.6,"precip":45.5,"visitor_index":0.72},{"month":5,"season":"Spring","temp":18.8,"precip":94.9,"visitor_index":0.85},{"month":6,"season":"Summer","temp":25.4,"precip":57.6,"visitor_index":1.08},{"month":7,"season":"Summer","temp":28.4,"precip":59.4,"visitor_index":1.01},{"month":8,"season":"Summer","temp":28.3,"precip":72.7,"visitor_index":0.88},{"month":9,"season":"Fall","temp":20.1,"precip":72.8,"visitor_index":0.84},{"month":10,"season":"Fall","temp":13.2,"precip":28.3,"visitor_index":0.59},{"month":11,"season":"Fall","temp":5.2,"precip":96.1,"visitor_index":0.24},{"month":12,"season":"Winter","temp":-3.8,"precip":52.2,"visitor_index":0.47}]},{"id":"D070","name":"Yukon Fall Adventure","province":"Yukon","lat":56.635,"lng":-122.083,"tags":["urban","photography","culture","nightlife"],"cost":178,"rating":4.8,"seasons":["Fall"],"type":"Resort","hotels":[],"meals":[],"attractions":[],"reviews":85,"match":0,"weather":[{"month":1,"season":"Winter","temp":-5.3,"precip":41.9,"visitor_index":0.33},{"month":2,"season":"Winter","temp":-2.6,"precip":35.5,"visitor_index":0.26},{"month":3,"season":"Spring","temp":6.5,"precip":67.7,"visitor_index":0.51},{"month":4,"season":"Spring","temp":14.5,"precip":65.8,"visitor_index":0.71},{"month":5,"season":"Spring","temp":23.1,"precip":62.3,"visitor_index":0.84},{"month":6,"season":"Summer","temp":27.8,"precip":40.4,"visitor_index":0.97},{"month":7,"season":"Summer","temp":29.8,"precip":100.5,"visitor_index":1.04},{"month":8,"season":"Summer","temp":29.9,"precip":54.4,"visitor_index":0.87},{"month":9,"season":"Fall","temp":25.3,"precip":31.6,"visitor_index":0.81},{"month":10,"season":"Fall","temp":16.7,"precip":76.5,"visitor_index":0.59},{"month":11,"season":"Fall","temp":6.0,"precip":55.0,"visitor_index":0.25},{"month":12,"season":"Winter","temp":-0.1,"precip":88.7,"visitor_index":0.31}]},{"id":"D071","name":"Newfoundland Winter Adventure","province":"Newfoundland","lat":44.754,"lng":-102.725,"tags":["photography","nature","family","adventure"],"cost":444,"rating":4.4,"seasons":["Winter"],"type":"Scenic Route","hotels":[],"meals":[],"attractions":[],"reviews":86,"match":0,"weather":[{"month":1,"season":"Winter","temp":2.9,"precip":48.9,"visitor_index":0.28},{"month":2,"season":"Winter","temp":7.4,"precip":56.5,"visitor_index":0.32},{"month":3,"season":"Spring","temp":13.1,"precip":64.6,"visitor_index":0.54},{"month":4,"season":"Spring","temp":23.0,"precip":75.6,"visitor_index":0.7},{"month":5,"season":"Spring","temp":32.7,"precip":56.0,"visitor_index":0.82},{"month":6,"season":"Summer","temp":36.6,"precip":58.1,"visitor_index":1.01},{"month":7,"season":"Summer","temp":41.2,"precip":35.0,"visitor_index":1.07},{"month":8,"season":"Summer","temp":37.8,"precip":46.3,"visitor_index":0.9},{"month":9,"season":"Fall","temp":33.1,"precip":91.5,"visitor_index":0.71},{"month":10,"season":"Fall","temp":25.2,"precip":17.5,"visitor_index":0.6},{"month":11,"season":"Fall","temp":17.0,"precip":91.8,"visitor_index":0.31},{"month":12,"season":"Winter","temp":9.7,"precip":71.7,"visitor_index":0.38}]},{"id":"D072","name":"Newfoundland Spring Adventure","province":"Newfoundland","lat":46.07,"lng":-101.118,"tags":["family","food","culture","nature"],"cost":107,"rating":4.3,"seasons":["Spring"],"type":"Beach","hotels":[],"meals":[],"attractions":[],"reviews":68,"match":0,"weather":[{"month":1,"season":"Winter","temp":1.3,"precip":65.5,"visitor_index":0.23},{"month":2,"season":"Winter","temp":7.0,"precip":56.8,"visitor_index":0.36},{"month":3,"season":"Spring","temp":12.2,"precip":65.4,"visitor_index":0.51},{"month":4,"season":"Spring","temp":22.7,"precip":51.3,"visitor_index":0.72},{"month":5,"season":"Spring","temp":29.8,"precip":35.8,"visitor_index":0.86},{"month":6,"season":"Summer","temp":36.4,"precip":61.3,"visitor_index":1.08},{"month":7,"season":"Summer","temp":39.4,"precip":86.5,"visitor_index":1.01},{"month":8,"season":"Summer","temp":37.7,"precip":97.0,"visitor_index":0.95},{"month":9,"season":"Fall","temp":31.6,"precip":74.5,"visitor_index":0.78},{"month":10,"season":"Fall","temp":25.5,"precip":12.2,"visitor_index":0.55},{"month":11,"season":"Fall","temp":16.7,"precip":55.0,"visitor_index":0.31},{"month":12,"season":"Winter","temp":6.4,"precip":97.0,"visitor_index":0.46}]},{"id":"D073","name":"Newfoundland Summer Adventure","province":"Newfoundland","lat":53.366,"lng":-66.556,"tags":["history","culture","skiing","food"],"cost":115,"rating":4.3,"seasons":["Summer"],"type":"River","hotels":[],"meals":[],"attractions":[],"reviews":72,"match":0,"weather":[{"month":1,"season":"Winter","temp":-3.0,"precip":51.9,"visitor_index":0.35},{"month":2,"season":"Winter","temp":2.2,"precip":79.1,"visitor_index":0.41},{"month":3,"season":"Spring","temp":6.3,"precip":43.6,"visitor_index":0.44},{"month":4,"season":"Spring","temp":17.7,"precip":63.5,"visitor_index":0.69},{"month":5,"season":"Spring","temp":26.0,"precip":84.6,"visitor_index":0.72},{"month":6,"season":"Summer","temp":29.6,"precip":76.4,"visitor_index":0.98},{"month":7,"season":"Summer","temp":33.4,"precip":80.4,"visitor_index":0.94},{"month":8,"season":"Summer","temp":32.9,"precip":66.6,"visitor_index":0.87},{"month":9,"season":"Fall","temp":27.0,"precip":48.6,"visitor_index":0.87},{"month":10,"season":"Fall","temp":19.1,"precip":73.4,"visitor_index":0.64},{"month":11,"season":"Fall","temp":9.6,"precip":18.9,"visitor_index":0.32},{"month":12,"season":"Winter","temp":2.3,"precip":71.1,"visitor_index":0.39}]},{"id":"D074","name":"Newfoundland Fall Adventure","province":"Newfoundland","lat":60.081,"lng":-69.941,"tags":["nature","adventure","wildlife","urban"],"cost":391,"rating":4.4,"seasons":["Fall"],"type":"Coastal","hotels":[],"meals":[],"attractions":[],"reviews":68,"match":0,"weather":[{"month":1,"season":"Winter","temp":-8.2,"precip":100.2,"visitor_index":0.23},{"month":2,"season":"Winter","temp":-4.1,"precip":48.5,"visitor_index":0.28},{"month":3,"season":"Spring","temp":1.9,"precip":43.9,"visitor_index":0.53},{"month":4,"season":"Spring","temp":13.6,"precip":69.4,"visitor_index":0.71},{"month":5,"season":"Spring","temp":19.2,"precip":70.3,"visitor_index":0.91},{"month":6,"season":"Summer","temp":24.8,"precip":52.5,"visitor_index":0.97},{"month":7,"season":"Summer","temp":28.7,"precip":5.1,"visitor_index":1.02},{"month":8,"season":"Summer","temp":27.3,"precip":27.8,"visitor_index":0.94},{"month":9,"season":"Fall","temp":20.1,"precip":53.2,"visitor_index":0.87},{"month":10,"season":"Fall","temp":12.8,"precip":29.3,"visitor_index":0.61},{"month":11,"season":"Fall","temp":6.3,"precip":28.5,"visitor_index":0.32},{"month":12,"season":"Winter","temp":-2.2,"precip":18.8,"visitor_index":0.44}]}];
+
+let filtered = [];
+let activeInterests = ["nature","hiking"];
+const API_BASE = window.TRAVEL_API_BASE || 'http://127.0.0.1:8000';
+const embeddedDestinationsById = new Map(destinations.map(d => [d.id, d]));
+const liveDestinationCache = new Map();
+let apiReady = false;
+
+function parseTags(rawTags) {
+  if (Array.isArray(rawTags)) return rawTags;
+  if (!rawTags) return [];
+  if (typeof rawTags === 'string' && rawTags.startsWith('[')) {
+    return rawTags.match(/[A-Za-z-]+/g) || [];
+  }
+  return String(rawTags).split('|').map(x => x.trim()).filter(Boolean);
+}
+
+function parseSeasons(rawSeasons) {
+  if (Array.isArray(rawSeasons)) return rawSeasons;
+  if (!rawSeasons) return [];
+  if (typeof rawSeasons === 'string' && rawSeasons.startsWith('[')) {
+    return rawSeasons.match(/[A-Za-z]+/g) || [];
+  }
+  return [String(rawSeasons)];
+}
+
+function normaliseDestination(dest) {
+  if (!dest) return null;
+  return {
+    id: dest.id || dest.dest_id,
+    dest_id: dest.dest_id || dest.id,
+    name: dest.name,
+    province: dest.province,
+    lat: dest.lat,
+    lng: dest.lng ?? dest.lon,
+    tags: parseTags(dest.tags),
+    cost: dest.cost ?? dest.avg_cost_day ?? 0,
+    avg_cost_day: dest.avg_cost_day ?? dest.cost ?? 0,
+    rating: dest.rating ?? dest.avg_rating ?? 0,
+    avg_rating: dest.avg_rating ?? dest.rating ?? 0,
+    seasons: parseSeasons(dest.seasons),
+    type: dest.type || '',
+    reviews: dest.reviews ?? dest.review_count ?? 0,
+    hotels: dest.hotels || [],
+    meals: dest.meals || [],
+    attractions: dest.attractions || [],
+    weather: dest.weather || [],
+    hybrid_score: dest.hybrid_score ?? 0,
+    cbf_score: dest.cbf_score ?? 0,
+    cf_score: dest.cf_score ?? 0,
+    match: dest.match ?? 0
+  };
+}
+
+async function apiFetch(path, options = {}) {
+  const response = await fetch(`${API_BASE}${path}`, {
+    headers: { 'Content-Type': 'application/json', ...(options.headers || {}) },
+    ...options
+  });
+  if (!response.ok) {
+    let message = `Request failed (${response.status})`;
+    try {
+      const payload = await response.json();
+      message = payload.detail || message;
+    } catch (_) {}
+    throw new Error(message);
+  }
+  return response.json();
+}
+
+async function ensureDestinationMetadata() {
+  if (apiReady) return;
+  const rows = await apiFetch('/destinations');
+  rows.forEach(row => {
+    const normalised = normaliseDestination(row);
+    liveDestinationCache.set(normalised.id, normalised);
+  });
+  apiReady = true;
+}
+
+async function loadDestinationDetail(destId) {
+  const cached = liveDestinationCache.get(destId);
+  if (cached && cached.hotels && cached.weather && cached.weather.length) {
+    return cached;
+  }
+  const detail = normaliseDestination(await apiFetch(`/destinations/${destId}`));
+  const fallback = embeddedDestinationsById.get(destId);
+  const merged = {
+    ...(fallback || {}),
+    ...(cached || {}),
+    ...detail,
+    hotels: detail.hotels && detail.hotels.length ? detail.hotels : ((cached && cached.hotels) || (fallback && fallback.hotels) || []),
+    meals: detail.meals && detail.meals.length ? detail.meals : ((cached && cached.meals) || (fallback && fallback.meals) || []),
+    attractions: detail.attractions && detail.attractions.length ? detail.attractions : ((cached && cached.attractions) || (fallback && fallback.attractions) || []),
+    weather: detail.weather && detail.weather.length ? detail.weather : ((cached && cached.weather) || (fallback && fallback.weather) || [])
+  };
+  liveDestinationCache.set(destId, merged);
+  return merged;
+}
+
+function setResultMessage(message) {
+  document.getElementById('result-count').textContent = message;
+}
+
+document.querySelectorAll('#interests .tag').forEach(t => {
+  t.addEventListener('click', () => {
+    t.classList.toggle('active');
+    activeInterests = [...document.querySelectorAll('#interests .tag.active')].map(x => x.dataset.val);
+  });
+});
+
+document.getElementById('budget').addEventListener('input', e => {
+  document.getElementById('budget-out').textContent = '$' + e.target.value;
+});
+document.getElementById('duration').addEventListener('input', e => {
+  document.getElementById('duration-out').textContent = e.target.value;
+});
+
+document.querySelectorAll('#tabs .tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('#tabs .tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    ['recommender','pipeline','datasets','metrics'].forEach(id => {
+      document.getElementById('tab-' + id).style.display = id === tab.dataset.tab ? 'block' : 'none';
+    });
+  });
+});
+
+function haversineDistance(lat1, lon1, lat2, lon2) {
+  const R = 6371;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}
+
+function validateItinerary(dest, days, totalBudget) {
+  if (!dest.hotels || dest.hotels.length === 0) {
+    const dailyCost = dest.cost;
+    return { feasible: true, totalCost: dailyCost * days, dailyCost };
+  }
+  const hotel = dest.hotels[0];
+  const meals = (dest.meals || []).slice(0, 3);
+  const attractions = (dest.attractions || []).slice(0, 2);
+  const mealCost = meals.reduce((a,b) => a + (b.cost||0), 0);
+  const attrCost = attractions.reduce((a,b) => a + (b.cost||0), 0);
+  const dailyCost = hotel.cost + mealCost + attrCost;
+  const totalCost = dailyCost * days;
+  const allPOIs = [...meals, ...attractions].filter(p => p.lat && p.lng);
+  const feasible = allPOIs.length === 0 || allPOIs.every(p => haversineDistance(hotel.lat, hotel.lng, p.lat, p.lng) <= 50);
+  return { feasible, totalCost, dailyCost };
+}
+
+function generateItinerary(dest, days) {
+  const itinerary = [];
+  const hotel = dest.hotels && dest.hotels.length ? dest.hotels[0] : { name: 'Local Accommodation', cost: dest.cost };
+  const meals = dest.meals && dest.meals.length ? dest.meals : [{ name: 'Local dining', cost: Math.round(dest.cost * 0.25) }];
+  const attractions = dest.attractions && dest.attractions.length ? dest.attractions : [{ name: 'Local exploration', cost: 0 }];
+  for (let d = 0; d < Math.min(days, 7); d++) {
+    itinerary.push({
+      day: d + 1,
+      morning: attractions[d % attractions.length],
+      lunch: meals[d % meals.length],
+      afternoon: attractions[(d + 1) % attractions.length],
+      dinner: meals[(d + 2) % meals.length],
+      hotel
+    });
+  }
+  return itinerary;
+}
+
+function getWeatherForSeason(dest, season) {
+  if (!dest.weather || !dest.weather.length) return null;
+  const seasonMap = { Winter: [12,1,2], Spring: [3,4,5], Summer: [6,7,8], Fall: [9,10,11] };
+  const months = seasonMap[season] || [6,7,8];
+  const rows = dest.weather.filter(w => months.includes(w.month));
+  if (!rows.length) return null;
+  return {
+    avgTemp: (rows.reduce((a,b) => a + b.temp, 0) / rows.length).toFixed(1),
+    avgPrecip: (rows.reduce((a,b) => a + b.precip, 0) / rows.length).toFixed(0),
+    visitorIndex: (rows.reduce((a,b) => a + b.visitor_index, 0) / rows.length).toFixed(2)
+  };
+}
+
+async function runRecommender() {
+  const grid = document.getElementById('cards');
+  setResultMessage('Fetching live recommendations...');
+  grid.innerHTML = '<div class="no-results"><div class="no-results-icon">&#8635;</div>Connecting to the recommendation API...</div>';
+
+  try {
+    await ensureDestinationMetadata();
+    const payload = {
+      interests: activeInterests.length ? activeInterests : ['nature', 'hiking'],
+      budget: parseInt(document.getElementById('budget').value, 10),
+      season: document.getElementById('season').value || null,
+      province: document.getElementById('province').value || null,
+      top_k: 20
+    };
+    const response = await apiFetch('/recommend', {
+      method: 'POST',
+      body: JSON.stringify(payload)
+    });
+
+    filtered = response.results.map(row => {
+      const liveMeta = liveDestinationCache.get(row.dest_id) || {};
+      const fallback = embeddedDestinationsById.get(row.dest_id) || {};
+      const merged = normaliseDestination({
+        ...fallback,
+        ...liveMeta,
+        ...row,
+        id: row.dest_id,
+        dest_id: row.dest_id,
+        cost: row.avg_cost_day,
+        rating: row.avg_rating,
+        review_count: liveMeta.review_count ?? fallback.reviews ?? 0
+      });
+      merged.match = Math.round((row.hybrid_score || 0) * 100);
+      return merged;
+    });
+
+    renderCards();
+  } catch (error) {
+    filtered = [];
+    setResultMessage('API unavailable');
+    grid.innerHTML = `<div class="no-results"><div class="no-results-icon">&#9888;</div>${error.message}. Start the FastAPI server and try again.</div>`;
+  }
+}
+
+function renderCards() {
+  const sortBy = document.getElementById('sort-by').value;
+  let sorted = [...filtered];
+  if (sortBy === 'cost') sorted.sort((a,b) => a.cost - b.cost);
+  else if (sortBy === 'rating') sorted.sort((a,b) => b.rating - a.rating);
+  else if (sortBy === 'reviews') sorted.sort((a,b) => b.reviews - a.reviews);
+
+  setResultMessage(`Showing ${sorted.length} live destination${sorted.length !== 1 ? 's' : ''}`);
+  const grid = document.getElementById('cards');
+  if (sorted.length === 0) {
+    grid.innerHTML = '<div class="no-results"><div class="no-results-icon">&#9784;</div>No destinations match your filters. Try adjusting your criteria.</div>';
+    return;
+  }
+
+  grid.innerHTML = sorted.map((d, i) => `
+    <div class="card">
+      <span class="match-badge">${d.match}% match</span>
+      <div class="card-eyebrow">${d.province}</div>
+      <div class="card-name">${d.name}</div>
+      <div class="card-type">${d.type || ''}</div>
+      <div class="card-tags">${(d.tags||[]).slice(0,3).map(t => `<span class="card-tag">${t}</span>`).join('')}</div>
+      <div class="card-stats">
+        <div class="stat"><strong>$${d.cost}/day</strong>Est. cost</div>
+        <div class="stat"><strong>${d.rating}/5.0</strong>Avg rating</div>
+        <div class="stat"><strong>${d.reviews > 0 ? d.reviews : '-'}</strong>${d.reviews > 0 ? 'Ratings logged' : 'No ratings'}</div>
+        <div class="stat"><strong>${(d.seasons||[]).join(', ')}</strong>Best seasons</div>
+      </div>
+      <div class="score-bar-wrap">
+        <div class="score-bar-label"><span>Hybrid match score</span><span>${d.match}%</span></div>
+        <div class="score-bar-bg"><div class="score-bar-fill" style="width:${d.match}%"></div></div>
+      </div>
+      <button class="card-btn" onclick="openModalById('${d.id}')">Explore destination &#8599;</button>
+    </div>
+  `).join('');
+}
+
+async function openModalById(destId) {
+  let dest = filtered.find(d => d.id === destId) || liveDestinationCache.get(destId) || embeddedDestinationsById.get(destId);
+  if (!dest) return;
+  try {
+    dest = await loadDestinationDetail(destId);
+  } catch (_) {
+    dest = normaliseDestination(dest);
+  }
+  const days = parseInt(document.getElementById('duration').value);
+  const budget = parseInt(document.getElementById('budget').value);
+  const season = document.getElementById('season').value || 'Summer';
+  const itinerary = generateItinerary(dest, days);
+  const itineCheck = validateItinerary(dest, days, budget * days);
+  const weather = getWeatherForSeason(dest, season);
+
+  let hotelSection = '';
+  if (dest.hotels && dest.hotels.length) {
+    hotelSection = '<div class="modal-section-label" style="margin-top:12px;">Accommodation options</div>';
+    hotelSection += dest.hotels.map(h => `<div style="font-size:11px;padding:4px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;"><span>${h.name}</span><span style="color:var(--teal);font-weight:600;">$${h.cost}/night</span></div>`).join('');
+  }
+
+  window.currentItinerary = itinerary;
+  window.currentItineraryDestName = dest.name;
+
+  let itineraryHTML = '<div class="itinerary-days-row">';
+  itinerary.forEach((day, idx) => {
+    itineraryHTML += `
+      <div class="itinerary-day" onclick="openDayModal(${idx})">
+        <div class="itinerary-day-header">Day ${day.day}</div>
+        <div class="itinerary-item"><span class="itinerary-time">&#9788; Morning</span> ${day.morning.name} <span class="itinerary-cost">$${day.morning.cost}</span></div>
+        <div class="itinerary-item"><span class="itinerary-time">&#9749; Lunch</span> ${day.lunch.name} <span class="itinerary-cost">$${day.lunch.cost}</span></div>
+        <div class="itinerary-item"><span class="itinerary-time">&#9728; Afternoon</span> ${day.afternoon.name} <span class="itinerary-cost">$${day.afternoon.cost}</span></div>
+        <div class="itinerary-item"><span class="itinerary-time">&#9790; Dinner</span> ${day.dinner.name} <span class="itinerary-cost">$${day.dinner.cost}</span></div>
+        <div class="itinerary-item"><span class="itinerary-time">&#127968; Hotel</span> ${day.hotel.name} <span class="itinerary-cost">$${day.hotel.cost}</span></div>
+      </div>`;
+  });
+  itineraryHTML += '</div>';
+  if (days > 7) {
+    itineraryHTML += `<div style="font-size:11px;color:var(--text3);text-align:center;padding:6px;">Pattern repeats for remaining ${days - 7} days</div>`;
+  }
+
+  let weatherHTML = '';
+  if (weather) {
+    weatherHTML = `<div class="modal-section-label" style="margin-top:12px;">Seasonal climate (${season})</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:8px;">
+        <div style="background:var(--mist);border-radius:8px;padding:8px;text-align:center;font-size:11px;">
+          <div style="font-size:18px;font-weight:600;color:var(--navy);">${weather.avgTemp}&deg;C</div>
+          <div style="color:var(--text3);">Avg Temp</div>
+        </div>
+        <div style="background:var(--mist);border-radius:8px;padding:8px;text-align:center;font-size:11px;">
+          <div style="font-size:18px;font-weight:600;color:var(--navy);">${weather.avgPrecip}mm</div>
+          <div style="color:var(--text3);">Precipitation</div>
+        </div>
+        <div style="background:var(--mist);border-radius:8px;padding:8px;text-align:center;font-size:11px;">
+          <div style="font-size:18px;font-weight:600;color:var(--teal);">${Math.round(parseFloat(weather.visitorIndex)*100)}%</div>
+          <div style="color:var(--text3);">Visitor Index</div>
+        </div>
+      </div>`;
+  }
+
+  const html = `
+    <div class="modal-title">${dest.name}</div>
+    <div class="modal-subtitle">${dest.province} &nbsp;&bull;&nbsp; ${dest.type || 'Destination'}</div>
+    <div style="margin-bottom:10px;">${(dest.tags||[]).map(t => `<span class="modal-badge">${t}</span>`).join('')}</div>
+    <div class="modal-meta-grid">
+      <div class="modal-meta"><div class="mv">$${dest.cost}/day</div><div class="ml">Est. Cost (CAD)</div></div>
+      <div class="modal-meta"><div class="mv">${dest.rating}/5.0</div><div class="ml">Avg Rating</div></div>
+      <div class="modal-meta"><div class="mv">${dest.reviews > 0 ? dest.reviews : '-'}</div><div class="ml">${dest.reviews > 0 ? 'Ratings in dataset' : 'Not yet rated'}</div></div>
+    </div>
+    <div class="modal-meta" style="background:var(--mist);text-align:left;padding:8px 10px;border-radius:8px;margin-bottom:10px;font-size:11px;">
+      <strong>Best seasons:</strong> ${(dest.seasons||[]).join(', ')} &nbsp;&bull;&nbsp; <strong>Match score:</strong> <span style="color:var(--teal);font-weight:600;">${dest.match}%</span>
+    </div>
+    ${weatherHTML}
+    ${hotelSection}
+    <div class="modal-divider"></div>
+    <div class="modal-section-label">&#128197; ${days}-Day Itinerary</div>
+    <div class="itinerary-summary">
+      <div><strong>Estimated total:</strong> $${itineCheck.totalCost.toFixed(0)} &nbsp;(~$${itineCheck.dailyCost.toFixed(0)}/day)</div>
+      <div><strong>Your budget:</strong> $${budget * days} ($${budget}/day)</div>
+      <div><strong>Feasibility:</strong> <span class="${itineCheck.feasible ? 'feasible-ok' : 'feasible-warn'}">${itineCheck.feasible ? '&#10003; Feasible' : '&#10007; Over budget'}</span></div>
+    </div>
+    ${itineraryHTML}
+  `;
+  document.getElementById('modal-content').innerHTML = html;
+  document.getElementById('destination-modal').style.display = 'flex';
+}
+
+function closeModal() {
+  document.getElementById('destination-modal').style.display = 'none';
+}
+
+function openDayModal(idx) {
+  const day = window.currentItinerary[idx];
+  if (!day) return;
+  const html = `
+    <div class="day-modal-header">${window.currentItineraryDestName || ''} &mdash; Day ${day.day}</div>
+    <div class="day-modal-item"><span class="day-modal-time">&#9788; Morning</span><span>${day.morning.name}</span><span class="day-modal-cost">$${day.morning.cost}</span></div>
+    <div class="day-modal-item"><span class="day-modal-time">&#9749; Lunch</span><span>${day.lunch.name}</span><span class="day-modal-cost">$${day.lunch.cost}</span></div>
+    <div class="day-modal-item"><span class="day-modal-time">&#9728; Afternoon</span><span>${day.afternoon.name}</span><span class="day-modal-cost">$${day.afternoon.cost}</span></div>
+    <div class="day-modal-item"><span class="day-modal-time">&#9790; Dinner</span><span>${day.dinner.name}</span><span class="day-modal-cost">$${day.dinner.cost}</span></div>
+    <div class="day-modal-item"><span class="day-modal-time">&#127968; Hotel</span><span>${day.hotel.name}</span><span class="day-modal-cost">$${day.hotel.cost}</span></div>
+  `;
+  document.getElementById('day-modal-content').innerHTML = html;
+  document.getElementById('day-modal').style.display = 'flex';
+}
+
+function closeDayModal() {
+  document.getElementById('day-modal').style.display = 'none';
+}
+
+const dayModal = document.getElementById('day-modal');
+if (dayModal) {
+  dayModal.addEventListener('click', function(e) {
+    if (e.target === this) closeDayModal();
+  });
+}
+
+const destinationModal = document.getElementById('destination-modal');
+if (destinationModal) {
+  destinationModal.addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+}
+
+function resetFilters() {
+  document.getElementById('province').value = '';
+  document.getElementById('season').value = '';
+  document.getElementById('budget').value = 200;
+  document.getElementById('budget-out').textContent = '$200';
+  document.getElementById('duration').value = 5;
+  document.getElementById('duration-out').textContent = '5';
+  document.querySelectorAll('#interests .tag').forEach(t => {
+    t.classList.remove('active');
+    if (['nature','hiking'].includes(t.dataset.val)) t.classList.add('active');
+  });
+  activeInterests = ['nature','hiking'];
+  filtered = [];
+  setResultMessage('Showing 0 destinations');
+  document.getElementById('cards').innerHTML = '';
+}
+
+runRecommender();
+</script>
